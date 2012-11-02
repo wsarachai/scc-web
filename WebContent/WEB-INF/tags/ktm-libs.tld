@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--============== Tag Library Description Elements ============= -->
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee web-jsptaglibrary_2_1.xsd">
+ <tlib-version>1.0</tlib-version>
+ <!-- <jsp-version>2.2</jsp-version>Tomcat 7.0 using JSP page 2.2 specification -->
+ <short-name>ktm</short-name>
+ <tag>
+  <name>iterate</name>
+  <tag-class>org.ktm.web.tags.IterateTag</tag-class>
+  <body-content>scriptless</body-content>
+  <attribute>
+   <name>id</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>name</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>property</name>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <name>options</name>
+  <tag-class>org.ktm.web.tags.OptionsTag</tag-class>
+  <body-content>scriptless</body-content>
+  <attribute>
+   <name>bean</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>selected</name>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>value</name>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>label</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>collection</name>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <name>if</name>
+  <tag-class>org.ktm.web.tags.IfTag</tag-class>
+  <body-content>scriptless</body-content>
+ </tag>
+ <tag>
+  <name>condition</name>
+  <tag-class>org.ktm.web.tags.IfConditionTag</tag-class>
+  <body-content>scriptless</body-content>
+ </tag>
+ <tag>
+  <name>then</name>
+  <tag-class>org.ktm.web.tags.IfThenTag</tag-class>
+  <body-content>scriptless</body-content>
+ </tag>
+ <tag>
+  <name>else</name>
+  <tag-class>org.ktm.web.tags.IfElseTag</tag-class>
+  <body-content>scriptless</body-content>
+ </tag>
+ <tag>
+  <name>Input</name>
+  <tag-class>org.ktm.web.tags.InputTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>name</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>value</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <description>
+                
+                Checks the user role as defined by the model element securityRole
+                
+            </description>
+  <name>isUserInRole</name>
+  <tag-class>org.ktm.web.tags.auth.IsUserInRoleTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>role</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <description>
+                
+                Checks the user role as defined by the model element securityRole
+                
+            </description>
+  <name>isUserNotInRole</name>
+  <tag-class>org.ktm.web.tags.auth.IsUserNotInRoleTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>role</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <description>
+                
+                Checks the user role as defined by the model element securityRole
+                
+            </description>
+  <name>isUserInRoles</name>
+  <tag-class>org.ktm.web.tags.auth.IsUserInRolesTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>roles</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <description>
+                
+                Checks the user role as defined by the model element securityRole&lt;
+                
+            </description>
+  <name>isUserNotInRoles</name>
+  <tag-class>org.ktm.web.tags.auth.IsUserNotInRolesTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>roles</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <description>
+                
+                Checks the user role as defined by the model element securityRole
+                
+            </description>
+  <name>isUserInAllRoles</name>
+  <tag-class>org.ktm.web.tags.auth.IsUserInAllRolesTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>roles</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <description>
+                
+                Checks the user role as defined by the model element securityRole
+                
+            </description>
+  <name>isUserNotInAllRoles</name>
+  <tag-class>org.ktm.web.tags.auth.IsUserNotInAllRolesTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>roles</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <description>
+                
+                Enforce user authentication
+                
+            </description>
+  <name>enforceAuthentication</name>
+  <tag-class>org.ktm.web.tags.auth.EnforceLoginTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>loginPage</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <description>
+                
+                Check for user logined
+                
+            </description>
+  <name>isUserLoggedIn</name>
+  <tag-class>org.ktm.web.tags.auth.IsUserLoggedInTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>
+                
+                Check for user not logined
+                
+            </description>
+  <name>isUserNotLoggedIn</name>
+  <tag-class>org.ktm.web.tags.auth.IsUserNotLoggedInTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>
+                
+                Trace uri page
+                
+            </description>
+  <name>tracUri</name>
+  <tag-class>org.ktm.web.tags.auth.TracUriTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>
+                
+                Redirect to specific page
+                
+      </description>
+  <name>redirectPage</name>
+  <tag-class>org.ktm.web.tags.auth.RedirectTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>page</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+ </tag>
+ <function>
+  <description>Get string from resource bundle</description>
+  <name>getText</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.String getText( java.lang.String )</function-signature>
+ </function>
+ <function>
+  <description>Get bean property method</description>
+  <name>getBeanProperty</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.Object getBeanProperty(
+            java.lang.Object, java.lang.String )</function-signature>
+ </function>
+ <function>
+  <description>Return lenght of a Collection</description>
+  <name>length</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.Integer length( java.util.Collection )</function-signature>
+ </function>
+ <function>
+  <name>isEmptyCollection</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.Boolean isEmptyCollection(
+            java.util.Collection )</function-signature>
+ </function>
+ <function>
+  <name>isEmpty</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.Boolean isEmpty(
+            java.lang.String )</function-signature>
+ </function>
+ <function>
+  <name>equal</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.Boolean equal(java.lang.String, java.lang.String)</function-signature>
+ </function>
+ <function>
+  <name>getEnumValues</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.String getEnumValues(java.lang.String)</function-signature>
+ </function>
+ <function>
+  <name>getAllUnits</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.String getAllUnits()</function-signature>
+ </function>
+ <function>
+  <name>getToDay</name>
+  <function-class>org.ktm.web.tags.Functions</function-class>
+  <function-signature>java.lang.String getToDay()</function-signature>
+ </function>
+</taglib>

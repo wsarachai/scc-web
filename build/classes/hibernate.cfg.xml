@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory name="">
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/scc_db?useUnicode=true&amp;characterEncoding=UTF-8</property>
+    <property name="connection.username">root</property>
+    <property name="connection.password">1234</property>
+    <!-- JDBC connection pool (use the built-in) -->
+    <property name="connection.pool_size">1</property>
+    <!-- SQL dialect -->
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    <!-- Enable Hibernate's automatic session context management -->
+    <property name="current_session_context_class">thread</property>
+    <!-- Disable the second-level cache -->
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    <!-- Echo all executed SQL to stdout -->
+    <property name="show_sql">true</property>
+    <!-- Drop and re-create the database schema on startup -->
+    <property name="hbm2ddl.auto">update</property>
+    <mapping class="org.ktm.domain.party.Authen" />
+    <mapping class="org.ktm.domain.party.Party" />
+    <mapping class="org.ktm.domain.party.Person" />
+    <mapping class="org.ktm.domain.party.PartyIdentifier" />
+    <mapping class="org.ktm.domain.party.RegisteredIdentifier" />
+    <mapping class="org.ktm.domain.party.AddressProperties" />
+    <mapping class="org.ktm.domain.party.EmailAddress" />
+    <mapping class="org.ktm.domain.party.GeographicAddress" />
+    <mapping class="org.ktm.domain.party.TelephoneAddress" />
+    <mapping class="org.ktm.domain.party.WebPageAddress" />
+    <mapping class="org.ktm.domain.party.PartyRoleIdentifier" />
+    <mapping class="org.ktm.domain.party.PartyRole" />
+    <mapping class="org.ktm.domain.party.Division" />
+    <mapping class="org.ktm.domain.party.Customer" />
+    <mapping class="org.ktm.domain.party.Organization" />
+    <mapping class="org.ktm.domain.party.Supplier" />
+    <mapping class="org.ktm.domain.party.Director" />
+    <mapping class="org.ktm.domain.party.Employer" />
+    <mapping class="org.ktm.domain.party.Employee" />
+    <mapping class="org.ktm.domain.party.Admin" />
+    <mapping class="org.ktm.domain.party.PartyRoleType" />
+    <mapping class="org.ktm.domain.party.RoleSet" />
+    <mapping class="org.ktm.domain.party.PartyRoleConstraint" />
+    <mapping class="org.ktm.domain.party.Collaborator" />
+    <mapping class="org.ktm.domain.party.JointProject" />
+    <mapping class="org.ktm.domain.party.Employment" />
+    <mapping class="org.ktm.domain.party.PartyRelationship" />
+    <mapping class="org.ktm.domain.party.PartyRelationshipType" />
+    <mapping class="org.ktm.domain.party.PartyRelationshipConstraint" />
+    <mapping class="org.ktm.domain.party.Collaboration" />
+    <mapping class="org.ktm.domain.party.PartySignature" />
+    <mapping class="org.ktm.domain.article.Article" />
+    <mapping class="org.ktm.domain.article.ArticleType" />
+    <mapping class="org.ktm.domain.article.Activities" />
+    <mapping class="org.ktm.domain.article.News" />
+    <mapping class="org.ktm.domain.article.Image" />
+  </session-factory>
+</hibernate-configuration>
