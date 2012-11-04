@@ -20,4 +20,8 @@
     <param-name>MainPage</param-name>
     <param-value>pages/main.jsp</param-value>
   </context-param>
+  <context-param>
+    <param-name>upload_path</param-name>
+    <param-value>/Users/keng/Downloads</param-value>
+  </context-param>
 </web-app>

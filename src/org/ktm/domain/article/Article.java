@@ -19,6 +19,7 @@ public class Article implements KTMEntity {
     private static final long serialVersionUID = 1L;
 
     private Integer           uniqueId;
+    private String            identifier;
     private Integer           version;
     private Party             author;
     private Date              dateCreated;
@@ -48,6 +49,14 @@ public class Article implements KTMEntity {
     @Override
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     @ManyToOne

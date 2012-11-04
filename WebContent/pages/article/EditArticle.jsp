@@ -19,44 +19,64 @@
     <h1>${ktm:getText("page.article.title")}</h1>
     </div>
     <div>
-        <form method="post" action="CRUDArticle">
+        <form id="frmContent" method="post" action="CRUDArticle">
             <input type="hidden" name="uniqueId" value="${bean.uniqueId}">
             <input type="hidden" name="method" value="save"><br>
             <label for="articleType">Type</label>
             <select name="articleTypeId" id="articleTypeId" size="1">
-              <option value="0" selected="selected" disabled="disabled">${ktm:getText("page.choose")}</option>
               <ktm:options selected="articleTypeId" bean="bean" label="name" value="uniqueId" collection="articleTypeCollection" />
             </select><br>
-            <label for="dateCreated">Date</label><input style="width: 170px" type="text" name="dateCreated" id="dateCreated" value="${bean.dateCreated}" class="text ui-widget-content ui-corner-all" /><br>
             <label for="title">Title</label>
             <input style="width:400px;" type="text" name="title" id="title" value="${bean.title}" class="text ui-widget-content ui-corner-all" /><br>
             <label for="content">Content</label>
             <textarea id="content" name="content" style="width: 600px; height: 100px;">${bean.content}</textarea>
-        <input type="submit" value="save">
         </form>
     </div>
     <br>
     <form id="fileupload" action="upload" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="uniqueId" value="${bean.uniqueId}">
         <div class="row fileupload-buttonbar">
+            <table role="presentation" class="table table-striped">
+                <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
+                <tr class="template-download fade in">
+                    <td class="preview">
+                        <a href="upload?getfile=_DSC7135.jpg" title="_DSC7135.jpg" rel="gallery" download="_DSC7135.jpg"><img src="upload?getthumb=_DSC7135.jpg"></a>
+                    </td>
+                    <td class="name">
+                        <a href="upload?getfile=_DSC7135.jpg" title="_DSC7135.jpg" rel="gallery" download="_DSC7135.jpg">_DSC7135.jpg</a>
+                    </td>
+                    <td class="size"><span>250.88 KB</span></td>
+                    <td colspan="2"></td>
+                    <td class="delete">
+                        <button class="btn btn-danger" data-type="GET" data-url="upload?delfile=_DSC7135.jpg">
+                            <i class="icon-trash icon-white"></i>
+                            <span>Delete</span>
+                        </button>
+                        <input type="checkbox" name="delete" value="1">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
             <div class="span7">
               <span class="btn btn-success fileinput-button">
                   <i class="icon-plus icon-white">
-                  </i><span>Add files...</span>
+                  </i><span>Add image...</span>
                   <input type="file" name="files[]" multiple>
               </span>
               <button type="submit" class="btn btn-primary start">
                   <i class="icon-upload icon-white"></i>
-                  <span>Start upload</span>
+                  <span>Upload</span>
               </button>
               <button type="reset" class="btn btn-warning cancel">
                   <i class="icon-ban-circle icon-white"></i>
-                  <span>Cancel upload</span>
+                  <span>Cancel</span>
               </button>
               <button type="button" class="btn btn-danger delete">
                   <i class="icon-trash icon-white"></i>
                   <span>Delete</span>
               </button>
-              <input type="checkbox" class="toggle">
+              <input type="checkbox" class="toggle">&nbsp;&nbsp;
+              <button id="btnSave" type="button" class="btn">Save data</button>
             </div>
             <div class="span5 fileupload-progress fade">
                 <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
@@ -65,11 +85,6 @@
                 <div class="progress-extended">&nbsp;</div>
             </div>
             <div class="fileupload-loading"></div>
-            <br>
-            <table role="presentation" class="table table-striped">
-                <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
-                </tbody>
-            </table>
         </div>
     </form>
   </div>
@@ -170,9 +185,10 @@
 <script src="js/jquery.fileupload-fp.js"></script>
 <script src="js/jquery.fileupload-ui.js"></script>
 <script src="js/jquery-ui-datepicker-th.js"></script>
-<script src="js/nicEdit.js" type="text/javascript"></script>
 <script src="js/jquery-ui-1.9.0.custom.js"></script>
 <script src="js/locale.js"></script>
+<script src="js/ckeditor.js"></script>
+<script src="js/adapters/jquery.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

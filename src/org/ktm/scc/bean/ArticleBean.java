@@ -3,7 +3,9 @@ package org.ktm.scc.bean;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.ktm.domain.KTMEntity;
 import org.ktm.domain.article.Article;
 import org.ktm.exception.KTMException;
@@ -12,12 +14,15 @@ import org.ktm.web.bean.FormBean;
 
 public class ArticleBean extends FormBean {
 
-    private String                title;
-    private String                dateCreated;
-    private Integer               articleTypeId;
-    private String                content;
+    public static final String     UNIQUD_ID             = "ARTICLE_UNIQUD_ID";
+    private String                 identifier;
+    private String                 title;
+    private String                 dateCreated;
+    private Integer                articleTypeId;
+    private String                 content;
+    private Map<String, ImageBean> images                = new HashMap<String, ImageBean>();
 
-    private List<ArticleTypeBean> articleTypeCollection = new ArrayList<ArticleTypeBean>();
+    private List<ArticleTypeBean>  articleTypeCollection = new ArrayList<ArticleTypeBean>();
 
     @Override
     public void loadFormCollection(Collection<?> entitys) throws KTMException {
@@ -40,6 +45,7 @@ public class ArticleBean extends FormBean {
             super.loadToForm(entity);
 
             Article article = (Article) entity;
+            this.setIdentifier(article.getIdentifier());
             this.setTitle(article.getTitle());
             try {
                 this.setDateCreated(DateUtils.formatDate(article.getDateCreated()));
@@ -56,6 +62,7 @@ public class ArticleBean extends FormBean {
             super.syncToEntity(entity);
 
             Article article = (Article) entity;
+            article.setIdentifier(this.getIdentifier());
             article.setTitle(this.getTitle());
             try {
                 article.setDateCreated(DateUtils.formatString(this.getDateCreated()));
@@ -64,6 +71,14 @@ public class ArticleBean extends FormBean {
             }
             article.setContent(this.getContent());
         }
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getTitle() {
@@ -104,6 +119,14 @@ public class ArticleBean extends FormBean {
 
     public void setArticleTypeCollection(List<ArticleTypeBean> articleTypeCollection) {
         this.articleTypeCollection = articleTypeCollection;
+    }
+
+    public Map<String, ImageBean> getImages() {
+        return images;
+    }
+
+    public void setImages(Map<String, ImageBean> images) {
+        this.images = images;
     }
 
 }
