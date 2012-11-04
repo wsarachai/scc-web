@@ -22,9 +22,11 @@ function getClearValue(value) {
 
 function updateTips(t) {
   tips.text(t).addClass("ui-state-highlight");
+  tips.fadeIn();
   setTimeout(function() {
-    tips.removeClass("ui-state-highlight", 1500);
-  }, 1000);
+    tips.removeClass("ui-state-highlight");
+    tips.fadeOut();
+  }, 3000);
 }
 
 function checkLength(o, n, min, max) {

@@ -1,9 +1,8 @@
-package org.ktm.domain.article;
+package org.ktm.domain.gallery;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import org.ktm.domain.KTMEntity;
 
@@ -15,8 +14,9 @@ public class Image implements KTMEntity {
     private Integer           uniqueId;
     private Integer           version;
     private String            path;
-    private Article           article;
+    private String            description;
     private Boolean           isTitle;
+    private Long              size;
 
     public Image() {
 
@@ -53,13 +53,12 @@ public class Image implements KTMEntity {
         this.path = path;
     }
 
-    @ManyToOne
-    public Article getArticle() {
-        return article;
+    public String getDescription() {
+        return description;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Boolean getIsTitle() {
@@ -68,6 +67,14 @@ public class Image implements KTMEntity {
 
     public void setIsTitle(Boolean isTitle) {
         this.isTitle = isTitle;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
     }
 
 }

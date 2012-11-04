@@ -11,7 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import org.ktm.domain.KTMEntity;
-import org.ktm.domain.party.Party;
+import org.ktm.domain.gallery.Image;
+import org.ktm.domain.party.Division;
 
 @Entity
 public class Article implements KTMEntity {
@@ -21,7 +22,7 @@ public class Article implements KTMEntity {
     private Integer           uniqueId;
     private String            identifier;
     private Integer           version;
-    private Party             author;
+    private Division          author;
     private Date              dateCreated;
     private String            title;
     private String            content;
@@ -60,11 +61,11 @@ public class Article implements KTMEntity {
     }
 
     @ManyToOne
-    public Party getAuthor() {
+    public Division getAuthor() {
         return author;
     }
 
-    public void setAuthor(Party author) {
+    public void setAuthor(Division author) {
         this.author = author;
     }
 
@@ -85,7 +86,7 @@ public class Article implements KTMEntity {
         this.content = content;
     }
 
-    @OneToMany(mappedBy = "article")
+    @OneToMany
     public List<Image> getImages() {
         return images;
     }

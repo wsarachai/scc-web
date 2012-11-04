@@ -6,11 +6,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.ktm.dao.KTMEMDaoFactory;
+import org.ktm.dao.article.ArticleTypeDao;
 import org.ktm.domain.KTMEntity;
 import org.ktm.domain.article.Article;
+import org.ktm.domain.article.ArticleType;
+import org.ktm.domain.gallery.Image;
 import org.ktm.exception.KTMException;
 import org.ktm.utils.DateUtils;
 import org.ktm.web.bean.FormBean;
+import org.ktm.web.tags.Functions;
 
 public class ArticleBean extends FormBean {
 
@@ -53,6 +58,17 @@ public class ArticleBean extends FormBean {
                 e.printStackTrace();
             }
             this.setContent(article.getContent());
+            this.setArticleTypeId(article.getType().getUniqueId());
+
+            this.getImages().clear();
+            List<Image> imgs = article.getImages();
+            if (imgs != null && imgs.size() > 0) {
+                for (Image img : imgs) {
+                    ImageBean imgBean = new ImageBean();
+                    imgBean.loadToForm(img);
+                    this.getImages().put(imgBean.getPath(), imgBean);
+                }
+            }
         }
     }
 
@@ -70,6 +86,37 @@ public class ArticleBean extends FormBean {
                 e.printStackTrace();
             }
             article.setContent(this.getContent());
+
+            ArticleTypeDao articleTypeDao = KTMEMDaoFactory.getInstance().getArticleTypeDao();
+            ArticleType type = (ArticleType) articleTypeDao.get(getArticleTypeId());
+            if (type != null) {
+                article.setType(type);
+            }
+        }
+    }
+
+    @Override
+    public void mergeForm(FormBean form) {
+        if (form != null) {
+            super.mergeForm(form);
+
+            ArticleBean bean = (ArticleBean) form;
+
+            if (bean.getArticleTypeId() != null) {
+                this.setArticleTypeId(bean.getArticleTypeId());
+            }
+            if (!Functions.isEmpty(bean.getContent())) {
+                this.setContent(bean.getContent());
+            }
+            if (!Functions.isEmpty(bean.getDateCreated())) {
+                this.setDateCreated(bean.getDateCreated());
+            }
+            if (!Functions.isEmpty(bean.getIdentifier())) {
+                this.setIdentifier(bean.getIdentifier());
+            }
+            if (!Functions.isEmpty(bean.getTitle())) {
+                this.setTitle(bean.getTitle());
+            }
         }
     }
 

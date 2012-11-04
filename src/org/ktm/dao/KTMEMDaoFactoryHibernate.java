@@ -1,13 +1,11 @@
 package org.ktm.dao;
 
-import org.ktm.dao.article.ActivitiesDao;
-import org.ktm.dao.article.ActivitiesDaoHibernate;
 import org.ktm.dao.article.ArticleDao;
 import org.ktm.dao.article.ArticleDaoHibernate;
 import org.ktm.dao.article.ArticleTypeDao;
 import org.ktm.dao.article.ArticleTypeDaoHibernate;
-import org.ktm.dao.article.NewsDao;
-import org.ktm.dao.article.NewsDaoHibernate;
+import org.ktm.dao.gallery.ImageDao;
+import org.ktm.dao.gallery.ImageDaoHibernate;
 import org.ktm.dao.party.AuthenDao;
 import org.ktm.dao.party.AuthenDaoHibernate;
 import org.ktm.dao.party.CustomerDao;
@@ -99,13 +97,8 @@ public class KTMEMDaoFactoryHibernate extends KTMEMDaoFactory {
     }
 
     @Override
-    public NewsDao getNewDao() {
-        return new NewsDaoHibernate();
-    }
-
-    @Override
-    public ActivitiesDao getActivitiesDao() {
-        return new ActivitiesDaoHibernate();
+    public ImageDao getImageDao() {
+        return new ImageDaoHibernate();
     }
 
 }

@@ -53,8 +53,7 @@
     <mapping class="org.ktm.domain.party.PartySignature" />
     <mapping class="org.ktm.domain.article.Article" />
     <mapping class="org.ktm.domain.article.ArticleType" />
-    <mapping class="org.ktm.domain.article.Activities" />
-    <mapping class="org.ktm.domain.article.News" />
-    <mapping class="org.ktm.domain.article.Image" />
+    <mapping class="org.ktm.domain.gallery.Gallery" />
+    <mapping class="org.ktm.domain.gallery.Image" />
   </session-factory>
 </hibernate-configuration>

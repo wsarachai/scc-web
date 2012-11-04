@@ -1,9 +1,8 @@
 package org.ktm.dao;
 
-import org.ktm.dao.article.ActivitiesDao;
 import org.ktm.dao.article.ArticleDao;
 import org.ktm.dao.article.ArticleTypeDao;
-import org.ktm.dao.article.NewsDao;
+import org.ktm.dao.gallery.ImageDao;
 import org.ktm.dao.party.AuthenDao;
 import org.ktm.dao.party.CustomerDao;
 import org.ktm.dao.party.DivisionDao;
@@ -51,8 +50,6 @@ public abstract class KTMEMDaoFactory {
 
     public abstract ArticleTypeDao getArticleTypeDao();
 
-    public abstract NewsDao getNewDao();
-
-    public abstract ActivitiesDao getActivitiesDao();
+    public abstract ImageDao getImageDao();
 
 }

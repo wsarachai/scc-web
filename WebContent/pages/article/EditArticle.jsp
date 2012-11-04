@@ -21,40 +21,44 @@
     <div>
         <form id="frmContent" method="post" action="CRUDArticle">
             <input type="hidden" name="uniqueId" value="${bean.uniqueId}">
+            <input type="hidden" name="identifier" value="${bean.identifier}">
+            <input type="hidden" name="dateCreated" value="${bean.dateCreated}">
             <input type="hidden" name="method" value="save"><br>
             <label for="articleType">Type</label>
             <select name="articleTypeId" id="articleTypeId" size="1">
-              <ktm:options selected="articleTypeId" bean="bean" label="name" value="uniqueId" collection="articleTypeCollection" />
+              <ktm:options selected="articleTypeId" bean="bean" label="description" value="uniqueId" collection="articleTypeCollection" />
             </select><br>
             <label for="title">Title</label>
             <input style="width:400px;" type="text" name="title" id="title" value="${bean.title}" class="text ui-widget-content ui-corner-all" /><br>
             <label for="content">Content</label>
-            <textarea id="content" name="content" style="width: 600px; height: 100px;">${bean.content}</textarea>
+            <textarea id="content" name="content">${bean.content}</textarea>
         </form>
     </div>
     <br>
-    <form id="fileupload" action="upload" method="POST" enctype="multipart/form-data">
+    <form id="fileupload" action="upload_image_article" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="uniqueId" value="${bean.uniqueId}">
         <div class="row fileupload-buttonbar">
             <table role="presentation" class="table table-striped">
                 <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
-                <tr class="template-download fade in">
-                    <td class="preview">
-                        <a href="upload?getfile=_DSC7135.jpg" title="_DSC7135.jpg" rel="gallery" download="_DSC7135.jpg"><img src="upload?getthumb=_DSC7135.jpg"></a>
-                    </td>
-                    <td class="name">
-                        <a href="upload?getfile=_DSC7135.jpg" title="_DSC7135.jpg" rel="gallery" download="_DSC7135.jpg">_DSC7135.jpg</a>
-                    </td>
-                    <td class="size"><span>250.88 KB</span></td>
-                    <td colspan="2"></td>
-                    <td class="delete">
-                        <button class="btn btn-danger" data-type="GET" data-url="upload?delfile=_DSC7135.jpg">
-                            <i class="icon-trash icon-white"></i>
-                            <span>Delete</span>
-                        </button>
-                        <input type="checkbox" name="delete" value="1">
-                    </td>
-                </tr>
+                <ktm:map_iterate name="bean" id="img" property="images">
+                  <tr class="template-download fade in">
+                      <td class="preview">
+                          <a href="upload_image_article?getfile=${img.name}" title="${img.name}" rel="gallery" download="${img.name}"><img src="upload_image_article?getthumb=${img.name}"></a>
+                      </td>
+                      <td class="name">
+                          <a href="upload_image_article?getfile=${img.name}" title="${img.name}" rel="gallery" download="${img.name}">${img.name}</a>
+                      </td>
+                      <td class="size"><span>${img.size}</span></td>
+                      <td colspan="2"></td>
+                      <td class="delete">
+                          <button class="btn btn-danger" data-type="GET" data-url="upload_image_article?delfile=${img.name}">
+                              <i class="icon-trash icon-white"></i>
+                              <span>Delete</span>
+                          </button>
+                          <input type="checkbox" name="delete" value="1">
+                      </td>
+                  </tr>
+                </ktm:map_iterate>
                 </tbody>
             </table>
             <div class="span7">
@@ -77,6 +81,9 @@
               </button>
               <input type="checkbox" class="toggle">&nbsp;&nbsp;
               <button id="btnSave" type="button" class="btn">Save data</button>
+              <div>
+                  <p class="validateTips"></p>
+              </div>
             </div>
             <div class="span5 fileupload-progress fade">
                 <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
@@ -189,6 +196,7 @@
 <script src="js/locale.js"></script>
 <script src="js/ckeditor.js"></script>
 <script src="js/adapters/jquery.js"></script>
-<script src="js/main.js"></script>
+<script src="js/ktm-lib.js"></script>
+<script src="js/article-main.js"></script>
 </body>
 </html>

@@ -1,8 +1,6 @@
 $(function () {
-  var content = "";
+  tips = $(".validateTips");
   var btnSave = $("#btnSave");
-  var title = $("#title");
-  var articleTypeId = $("#articleTypeId");
   $('#fileupload').fileupload();
   $('#fileupload').fileupload(
       'option',
@@ -13,7 +11,7 @@ $(function () {
       )
   );
   $('#fileupload').fileupload('option', {
-      url: 'upload',
+      url: 'upload_image_article',
       maxFileSize: 5000000,
       acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
       process: [
@@ -46,7 +44,7 @@ $(function () {
   // Upload server status check for browsers with CORS support:
   if ($.support.cors) {
       $.ajax({
-          url: 'upload',
+          url: 'upload_image_article',
           type: 'HEAD'
       }).fail(function () {
           $('<span class="alert alert-error"/>')
@@ -55,27 +53,11 @@ $(function () {
               .appendTo('#fileupload');
       });
   }
-  articleTypeId.change(function() {
-    btnSave.attr("disabled", false); 
-  });
-  title.change(function() {
-    btnSave.attr("disabled", false); 
-  });
   $('#content').ckeditor();
-  CKEDITOR.instances['content'].on('blur', function(e) {
-      if (e.editor.checkDirty()) {
-        btnSave.attr("disabled", false);
-      }
-  });
   btnSave.click(function(){
-    //var e = encodeURIComponent($("#content").val());
-    //alert(e);
-    //e = decodeURIComponent(e);
-    //alert(e);
     $.post("CRUDArticle", $("#frmContent").serialize(),
         function(data) {
-          alert("Data Loaded: " + data);
+          updateTips("Data saveing: " + data);
         });
-    btnSave.attr("disabled", true); 
   });
 });
