@@ -30,7 +30,7 @@ public class Index extends AbstractServlet {
     }
 
     @Override
-    protected ActionForward processRequest(FormBean form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected ActionForward processRequest(FormBean form, HttpServletRequest request, HttpServletResponse response, final String htmlMethod) throws ServletException, IOException {
         redirectName = request.getParameter("page");
         ActionForward action = null;
 

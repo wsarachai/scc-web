@@ -13,14 +13,14 @@ import org.ktm.servlet.AbstractServlet;
 import org.ktm.servlet.ActionForward;
 import org.ktm.web.bean.FormBean;
 
-@WebServlet("/logout")
+@WebServlet("/RGB7-backoffice-v4/logout")
 public class Logout extends AbstractServlet {
 
     private static final long serialVersionUID = 592209854904210873L;
     private final Logger      log              = Logger.getLogger(Logout.class);
 
     @Override
-    protected ActionForward processRequest(FormBean form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected ActionForward processRequest(FormBean form, HttpServletRequest request, HttpServletResponse response, final String htmlMethod) throws ServletException, IOException {
         log.info("Processing logout...");
 
         try {

@@ -21,6 +21,11 @@ public class UploadImageArticle extends UploadServlet {
 
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public String getBeanClass() {
+        return "org.ktm.web.bean.FormBean";
+    }
+
     protected String getImagePath(Date date, String contentName) {
         Calendar c = Calendar.getInstance(Localizer.getCurrentLocale());
         c.setTime(date);

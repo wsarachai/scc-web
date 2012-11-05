@@ -14,7 +14,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
@@ -24,8 +23,9 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.imgscalr.Scalr;
+import org.ktm.servlet.DispatchServlet;
 
-public abstract class UploadServlet extends HttpServlet {
+public abstract class UploadServlet extends DispatchServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,8 +48,7 @@ public abstract class UploadServlet extends HttpServlet {
 
     protected abstract String getServletPath();
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void htmlGetForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // if (AuthenticatorFactory.isUserLoggedIn(request)) {
         if (request.getParameter("getfile") != null && !request.getParameter("getfile").isEmpty()) {
             File file = new File(getFile(request), request.getParameter("getfile"));
@@ -114,8 +113,7 @@ public abstract class UploadServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void htmlPostForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!ServletFileUpload.isMultipartContent(request)) { throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form."); }
 
         ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());

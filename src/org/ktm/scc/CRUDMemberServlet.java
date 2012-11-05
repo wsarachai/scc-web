@@ -28,7 +28,7 @@ import org.ktm.servlet.CRUDServlet;
 import org.ktm.web.bean.FormBean;
 import org.ktm.web.tags.Functions;
 
-@WebServlet("/CRUDMembers")
+@WebServlet("/RGB7-backoffice-v4/CRUDMembers")
 public class CRUDMemberServlet extends CRUDServlet {
 
     private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class CRUDMemberServlet extends CRUDServlet {
         }
         PersonBean bean = (PersonBean) form;
         bean.loadFormCollection(persons);
-        return ActionForward.getUri(this, request, "members/ListMembers.jsp");
+        return ActionForward.getUri(this, request, "ListMembers.jsp");
     }
 
     private void getDivisionCollection(MemberBean bean) {
@@ -77,27 +77,31 @@ public class CRUDMemberServlet extends CRUDServlet {
             bean.loadToForm(person);
             getDivisionCollection(bean);
         }
-        return ActionForward.getUri(this, request, "members/EditMembers.jsp");
+        return ActionForward.getUri(this, request, "EditMembers.jsp");
     }
 
     public ActionForward newMember(FormBean form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MemberBean bean = (MemberBean) form;
         getDivisionCollection(bean);
-        return ActionForward.getUri(this, request, "members/EditMembers.jsp");
+        return ActionForward.getUri(this, request, "EditMembers.jsp");
     }
 
     public ActionForward saveMember(FormBean form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, KTMException {
         MemberBean bean = (MemberBean) form;
+
         AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
         PersonDao personDao = KTMEMDaoFactory.getInstance().getPersonDao();
         EmploymentDao empmDao = KTMEMDaoFactory.getInstance().getEmploymentDao();
         DivisionDao divisionDao = KTMEMDaoFactory.getInstance().getDivisionDao();
+
         Person person = null;
+
         if (!Functions.isEmpty(bean.getUniqueId())) {
             person = (Person) personDao.get(Integer.parseInt(bean.getUniqueId()));
         } else {
             person = new Person();
         }
+
         bean.syncToEntity(person);
 
         Employee employee = bean.getEmployeeRole(person);
@@ -106,18 +110,20 @@ public class CRUDMemberServlet extends CRUDServlet {
             person.getRoles().add(employee);
             employee.setParty(person);
         }
+
         personDao.createOrUpdate(person);
 
-        if (!Functions.isEmpty(bean.getUsername()) && !Functions.isEmpty(bean.getPassword())) {
+        if (!Functions.isEmpty(bean.getLoginuser()) && !Functions.isEmpty(bean.getLoginpassword())) {
             Authen authen = authenDao.findByPartyId(person.getUniqueId());
             if (authen == null) {
                 authen = new Authen();
                 authen.setParty(person);
             }
-            authen.setUsername(bean.getUsername());
-            authen.setPassword(AuthenImpl.encode(bean.getUsername(), bean.getPassword()));
+            authen.setUsername(bean.getLoginuser());
+            authen.setPassword(AuthenImpl.encode(bean.getLoginuser(), bean.getLoginpassword()));
             authenDao.createOrUpdate(authen);
         }
+
         Employment empm = empmDao.findByClient(employee.getUniqueId());
         if (empm == null) {
             empm = new Employment();

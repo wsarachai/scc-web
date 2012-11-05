@@ -21,8 +21,8 @@ public class PersonBean extends PartyBean {
     private String    birthDay;
     private ISOGender gender;
 
-    private String    username;
-    private String    password;
+    private String    loginuser;
+    private String    loginpassword;
 
     @Override
     public void reset() {
@@ -54,8 +54,8 @@ public class PersonBean extends PartyBean {
             AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
             Authen authen = authenDao.findByPartyId(person.getUniqueId());
             if (authen != null) {
-                this.setUsername(authen.getUsername());
-                this.setPassword(authen.getPassword());
+                this.setLoginuser(authen.getUsername());
+                this.setLoginpassword(authen.getPassword());
             }
         }
     }
@@ -81,8 +81,8 @@ public class PersonBean extends PartyBean {
             AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
             Authen authen = authenDao.findByPartyId(person.getUniqueId());
             if (authen != null) {
-                authen.setUsername(this.getUsername());
-                authen.setPassword(this.getPassword());
+                authen.setUsername(this.getLoginuser());
+                authen.setPassword(this.getLoginpassword());
                 try {
                     authenDao.createOrUpdate(authen);
                 } catch (CreateException e) {
@@ -155,20 +155,20 @@ public class PersonBean extends PartyBean {
         this.citizenId = citizenId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLoginuser() {
+        return loginuser;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLoginuser(String loginuser) {
+        this.loginuser = loginuser;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLoginpassword() {
+        return loginpassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLoginpassword(String loginpassword) {
+        this.loginpassword = loginpassword;
     }
 
 }

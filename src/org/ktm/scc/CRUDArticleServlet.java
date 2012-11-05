@@ -209,6 +209,25 @@ public class CRUDArticleServlet extends CRUDServlet {
     }
 
     public ActionForward delArticle(FormBean form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArticleBean bean = (ArticleBean) form;
+        ImageDao imageDao = KTMEMDaoFactory.getInstance().getImageDao();
+        ArticleDao articleDao = KTMEMDaoFactory.getInstance().getArticleDao();
+        Article article = (Article) articleDao.get(Integer.valueOf(bean.getUniqueId()));
+        if (article != null) {
+            for (Image img : article.getImages()) {
+                imageDao.getCrudAdmin().addDeleted(img);
+            }
+            article.getImages().clear();
+            try {
+                articleDao.delete(article);
+
+                for (Object obj : imageDao.getCrudAdmin().getDeletedCollection()) {
+                    imageDao.delete(((Image) obj).getUniqueId());
+                }
+            } catch (DeleteException e) {
+                e.printStackTrace();
+            }
+        }
         return ActionForward.getAction(this, request, "CRUDArticle?method=list", true);
     }
 

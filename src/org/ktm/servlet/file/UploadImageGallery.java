@@ -12,6 +12,11 @@ public class UploadImageGallery extends UploadServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
+    public String getBeanClass() {
+        return "org.ktm.web.bean.FormBean";
+    }
+
+    @Override
     protected String getImagePath(Date date, String contentName) {
         // TODO Auto-generated method stub
         return null;
