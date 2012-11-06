@@ -12,41 +12,46 @@ import org.ktm.servlet.ActionForward;
 import org.ktm.utils.Globals;
 import org.ktm.web.bean.FormBean;
 
-@WebServlet("/index")
+@WebServlet( "/index" )
 public class Index extends AbstractServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-    private final Logger      log              = Logger.getLogger(Index.class);
+	private final Logger		log					= Logger.getLogger( Index.class );
 
-    private String            redirectName;
+	private String				redirectName;
 
-    @Override
-    public String getBeanClass() {
-        return "org.ktm.scc.bean.MainBean";
-    }
+	@Override
+	public String getBeanClass() {
+		return "org.ktm.scc.bean.MainBean";
+	}
 
-    public String getRedirectName() {
-        return redirectName;
-    }
+	public String getRedirectName() {
+		return redirectName;
+	}
 
-    @Override
-    protected ActionForward processRequest(FormBean form, HttpServletRequest request, HttpServletResponse response, final String htmlMethod) throws ServletException, IOException {
-        redirectName = request.getParameter("page");
-        ActionForward action = null;
+	@Override
+	protected ActionForward
+			processRequest( FormBean form,
+							HttpServletRequest request,
+							HttpServletResponse response,
+							final String htmlMethod )	throws ServletException,
+														IOException {
+		redirectName = request.getParameter( "page" );
+		ActionForward action = null;
 
-        String pageType = request.getParameter("t");
-        if (pageType != null && redirectName != null) {
-            if (pageType.equals("t")) {
-                log.info("Go to page: " + redirectName);
-                action = ActionForward.getAction(this, request, redirectName);
-            }
-        }
-        if (redirectName == null) {
-            ServletContext context = request.getServletContext();
-            String mainPage = context.getInitParameter(Globals.MAIN_PAGE);
-            action = ActionForward.getAction(this, request, mainPage);
-        }
-        return action;
-    }
+		String pageType = request.getParameter( "t" );
+		if ( pageType != null && redirectName != null ) {
+			if ( pageType.equals( "t" ) ) {
+				log.info( "Go to page: " + redirectName );
+				action = ActionForward.getAction( this, request, redirectName );
+			}
+		}
+		if ( redirectName == null ) {
+			ServletContext context = request.getServletContext();
+			String mainPage = context.getInitParameter( Globals.MAIN_PAGE );
+			action = ActionForward.getAction( this, request, mainPage );
+		}
+		return action;
+	}
 
 }

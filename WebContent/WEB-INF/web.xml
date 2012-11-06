@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>scc-web</display-name>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  <context-param>
-    <param-name>authenticator_class</param-name>
-    <param-value>org.ktm.scc.login.AuthenImpl</param-value>
-  </context-param>
-  <context-param>
-    <param-name>date_format</param-name>
-    <param-value>dd-MM-yyyy</param-value>
-  </context-param>
-  <context-param>
-    <param-name>BasePath</param-name>
-    <param-value>/RGB7-backoffice-v4/</param-value>
-  </context-param>
-  <context-param>
-    <param-name>jspLoginPage</param-name>
-    <param-value>login.jsp</param-value>
-  </context-param>
-  <context-param>
-    <param-name>MainPage</param-name>
-    <param-value>start.jsp</param-value>
-  </context-param>
-  <context-param>
-    <param-name>upload_path</param-name>
-    <param-value>/Users/keng/Downloads</param-value>
-  </context-param>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+		id="WebApp_ID" version="3.0">
+		<display-name>scc-web</display-name>
+		<welcome-file-list>
+				<welcome-file>index.jsp</welcome-file>
+		</welcome-file-list>
+		<context-param>
+				<param-name>authenticator_class</param-name>
+				<param-value>org.ktm.scc.login.AuthenImpl</param-value>
+		</context-param>
+		<context-param>
+				<param-name>date_format</param-name>
+				<param-value>dd-MM-yyyy</param-value>
+		</context-param>
+		<context-param>
+				<param-name>BasePath</param-name>
+				<param-value>/RGB7-backoffice-v4/</param-value>
+		</context-param>
+		<context-param>
+				<param-name>jspLoginPage</param-name>
+				<param-value>login.jsp</param-value>
+		</context-param>
+		<context-param>
+				<param-name>MainPage</param-name>
+				<param-value>start.jsp</param-value>
+		</context-param>
+		<context-param>
+				<param-name>upload_path</param-name>
+				<param-value>/Users/keng/Downloads</param-value>
+		</context-param>
+		<context-param>
+				<param-name>paging</param-name>
+				<param-value>5</param-value>
+		</context-param>
 </web-app>
