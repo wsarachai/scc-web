@@ -62,13 +62,14 @@ public class CRUDMemberServlet extends CRUDServlet {
 				}
 			}
 		}
+
 		// test
-		Person p = persons.get( 0 );
-		for ( int i = 0; i < 4; i++ ) {
-			persons.add( p );
+		bean.setMaxRows( 100 );
+		Person person = persons.get( 0 );
+		for ( int i = 1; i < 4; i++ ) {
+			persons.add( person );
 		}
-		bean.setMaxRows( 48 );
-		// test
+		// end test
 		bean.loadFormCollection( persons );
 		return ActionForward.getUri( this, request, "ListMembers.jsp" );
 	}
