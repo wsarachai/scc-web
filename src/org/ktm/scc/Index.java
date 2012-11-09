@@ -12,7 +12,8 @@ import org.ktm.servlet.ActionForward;
 import org.ktm.utils.Globals;
 import org.ktm.web.bean.FormBean;
 
-@WebServlet( "/index" )
+@WebServlet( name = "IndexServlet",
+				urlPatterns = { "/index", "/RGB7-backoffice-v4/index" } )
 public class Index extends AbstractServlet {
 	private static final long	serialVersionUID	= 1L;
 
@@ -43,7 +44,10 @@ public class Index extends AbstractServlet {
 		if ( pageType != null && redirectName != null ) {
 			if ( pageType.equals( "t" ) ) {
 				log.info( "Go to page: " + redirectName );
-				action = ActionForward.getAction( this, request, redirectName );
+				String param = request.getParameter( "param" );
+				action = ActionForward.getAction( this,
+						request,
+						redirectName + "?" + param );
 			}
 		}
 		if ( redirectName == null ) {

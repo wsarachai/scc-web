@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.ktm.core.KTMContext;
 import org.ktm.dao.KTMEMDaoFactory;
 import org.ktm.dao.party.AuthenDao;
 import org.ktm.dao.party.DivisionDao;
@@ -46,8 +47,10 @@ public class CRUDMemberServlet extends CRUDServlet {
 		List<Person> persons = new ArrayList<Person>();
 
 		AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
-		List<Authen> authens = (List<Authen>) authenDao.find( bean.getPageNumber() );
+		//List<Authen> authens = (List<Authen>) authenDao.find( bean.getPageNumber() );
+		List<Authen> authens = (List<Authen>) authenDao.find( 1 );
 
+		bean.setMaxPage( KTMContext.paging );
 		bean.setMaxRows( (int) authenDao.getCount() );
 
 		Iterator<Authen> it = authens.iterator();
@@ -59,6 +62,13 @@ public class CRUDMemberServlet extends CRUDServlet {
 				}
 			}
 		}
+		// test
+		Person p = persons.get( 0 );
+		for ( int i = 0; i < 4; i++ ) {
+			persons.add( p );
+		}
+		bean.setMaxRows( 48 );
+		// test
 		bean.loadFormCollection( persons );
 		return ActionForward.getUri( this, request, "ListMembers.jsp" );
 	}

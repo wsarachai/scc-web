@@ -280,6 +280,21 @@
    <rtexprvalue>false</rtexprvalue>
   </attribute>
  </tag>
+ <tag>
+  <name>Pagination</name>
+  <tag-class>org.ktm.scc.tag.PaginationTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>servletName</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
+  <name>ShowPageRangeNumber</name>
+  <tag-class>org.ktm.scc.tag.ShowPageRangeNumberTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
  <function>
   <description>Get string from resource bundle</description>
   <name>getText</name>
