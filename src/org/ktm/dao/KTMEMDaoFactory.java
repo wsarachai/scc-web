@@ -2,6 +2,7 @@ package org.ktm.dao;
 
 import org.ktm.dao.article.ArticleDao;
 import org.ktm.dao.article.ArticleTypeDao;
+import org.ktm.dao.gallery.GalleryDao;
 import org.ktm.dao.gallery.ImageDao;
 import org.ktm.dao.party.AuthenDao;
 import org.ktm.dao.party.CustomerDao;
@@ -16,40 +17,42 @@ import org.ktm.dao.party.SupplierDao;
 
 public abstract class KTMEMDaoFactory {
 
-    public static final KTMEMDaoFactory HIBERNATE = new KTMEMDaoFactoryHibernate();
+	public static final KTMEMDaoFactory	HIBERNATE	= new KTMEMDaoFactoryHibernate();
 
-    public static final KTMEMDaoFactory DEFAULT   = HIBERNATE;
+	public static final KTMEMDaoFactory	DEFAULT		= HIBERNATE;
 
-    public static KTMEMDaoFactory getInstance() {
-        return DEFAULT;
-    }
+	public static KTMEMDaoFactory getInstance() {
+		return DEFAULT;
+	}
 
-    public abstract AuthenDao getAuthenDao();
+	public abstract AuthenDao getAuthenDao();
 
-    public abstract PersonDao getPersonDao();
+	public abstract PersonDao getPersonDao();
 
-    public abstract PartyRoleDao getPartyRoleDao();
+	public abstract PartyRoleDao getPartyRoleDao();
 
-    public abstract SupplierDao getSupplierDao();
+	public abstract SupplierDao getSupplierDao();
 
-    public abstract OrganizationDao getOrganizationDao();
+	public abstract OrganizationDao getOrganizationDao();
 
-    public abstract CustomerDao getCustomerDao();
+	public abstract CustomerDao getCustomerDao();
 
-    public abstract EmploymentDao getEmploymentDao();
+	public abstract EmploymentDao getEmploymentDao();
 
-    public abstract org.ktm.dao.party.PartyDao getPartyDao();
+	public abstract org.ktm.dao.party.PartyDao getPartyDao();
 
-    public abstract PartyRoleTypeDao getPartyRoleTypeDao();
+	public abstract PartyRoleTypeDao getPartyRoleTypeDao();
 
-    public abstract DivisionDao getDivisionDao();
+	public abstract DivisionDao getDivisionDao();
 
-    public abstract EmployeeDao getEmployeeDao();
+	public abstract EmployeeDao getEmployeeDao();
 
-    public abstract ArticleDao getArticleDao();
+	public abstract ArticleDao getArticleDao();
 
-    public abstract ArticleTypeDao getArticleTypeDao();
+	public abstract ArticleTypeDao getArticleTypeDao();
 
-    public abstract ImageDao getImageDao();
+	public abstract ImageDao getImageDao();
+
+	public abstract GalleryDao getGalleryDao();
 
 }

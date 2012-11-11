@@ -4,6 +4,8 @@ import org.ktm.dao.article.ArticleDao;
 import org.ktm.dao.article.ArticleDaoHibernate;
 import org.ktm.dao.article.ArticleTypeDao;
 import org.ktm.dao.article.ArticleTypeDaoHibernate;
+import org.ktm.dao.gallery.GalleryDao;
+import org.ktm.dao.gallery.GalleryDaoHibernate;
 import org.ktm.dao.gallery.ImageDao;
 import org.ktm.dao.gallery.ImageDaoHibernate;
 import org.ktm.dao.party.AuthenDao;
@@ -31,74 +33,79 @@ import org.ktm.dao.party.SupplierDaoHibernate;
 
 public class KTMEMDaoFactoryHibernate extends KTMEMDaoFactory {
 
-    @Override
-    public AuthenDao getAuthenDao() {
-        return new AuthenDaoHibernate();
-    }
+	@Override
+	public AuthenDao getAuthenDao() {
+		return new AuthenDaoHibernate();
+	}
 
-    @Override
-    public PersonDao getPersonDao() {
-        return new PersonDaoHibernate();
-    }
+	@Override
+	public PersonDao getPersonDao() {
+		return new PersonDaoHibernate();
+	}
 
-    @Override
-    public PartyRoleDao getPartyRoleDao() {
-        return new PartyRoleDaoHibernate();
-    }
+	@Override
+	public PartyRoleDao getPartyRoleDao() {
+		return new PartyRoleDaoHibernate();
+	}
 
-    @Override
-    public SupplierDao getSupplierDao() {
-        return new SupplierDaoHibernate();
-    }
+	@Override
+	public SupplierDao getSupplierDao() {
+		return new SupplierDaoHibernate();
+	}
 
-    @Override
-    public OrganizationDao getOrganizationDao() {
-        return new OrganizationDaoHibernate();
-    }
+	@Override
+	public OrganizationDao getOrganizationDao() {
+		return new OrganizationDaoHibernate();
+	}
 
-    @Override
-    public CustomerDao getCustomerDao() {
-        return new CustomerDaoHibernate();
-    }
+	@Override
+	public CustomerDao getCustomerDao() {
+		return new CustomerDaoHibernate();
+	}
 
-    @Override
-    public EmploymentDao getEmploymentDao() {
-        return new EmploymentDaoHibernate();
-    }
+	@Override
+	public EmploymentDao getEmploymentDao() {
+		return new EmploymentDaoHibernate();
+	}
 
-    @Override
-    public PartyDao getPartyDao() {
-        return new PartyDaoHibernate();
-    }
+	@Override
+	public PartyDao getPartyDao() {
+		return new PartyDaoHibernate();
+	}
 
-    @Override
-    public PartyRoleTypeDao getPartyRoleTypeDao() {
-        return new PartyRoleTypeDaoHibernate();
-    }
+	@Override
+	public PartyRoleTypeDao getPartyRoleTypeDao() {
+		return new PartyRoleTypeDaoHibernate();
+	}
 
-    @Override
-    public DivisionDao getDivisionDao() {
-        return new DivisionDaoHibernate();
-    }
+	@Override
+	public DivisionDao getDivisionDao() {
+		return new DivisionDaoHibernate();
+	}
 
-    @Override
-    public EmployeeDao getEmployeeDao() {
-        return new EmployeeDaoHibernate();
-    }
+	@Override
+	public EmployeeDao getEmployeeDao() {
+		return new EmployeeDaoHibernate();
+	}
 
-    @Override
-    public ArticleDao getArticleDao() {
-        return new ArticleDaoHibernate();
-    }
+	@Override
+	public ArticleDao getArticleDao() {
+		return new ArticleDaoHibernate();
+	}
 
-    @Override
-    public ArticleTypeDao getArticleTypeDao() {
-        return new ArticleTypeDaoHibernate();
-    }
+	@Override
+	public ArticleTypeDao getArticleTypeDao() {
+		return new ArticleTypeDaoHibernate();
+	}
 
-    @Override
-    public ImageDao getImageDao() {
-        return new ImageDaoHibernate();
-    }
+	@Override
+	public ImageDao getImageDao() {
+		return new ImageDaoHibernate();
+	}
+
+	@Override
+	public GalleryDao getGalleryDao() {
+		return new GalleryDaoHibernate();
+	}
 
 }

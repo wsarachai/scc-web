@@ -25,6 +25,8 @@ public class ArticleBean extends FormBean {
 	private String					dateCreated;
 	private Integer					articleTypeId;
 	private String					content;
+	private String					publishOnMain;
+	private DivisionBean			author					= new DivisionBean();
 	private Map<String,ImageBean>	images					= new HashMap<String,ImageBean>();
 
 	private List<ArticleTypeBean>	articleTypeCollection	= new ArrayList<ArticleTypeBean>();
@@ -59,7 +61,12 @@ public class ArticleBean extends FormBean {
 				e.printStackTrace();
 			}
 			this.setContent( article.getContent() );
+			this.setPublishOnMain( article.getPublishOnMain() );
 			//this.setArticleTypeId(article.getType().getUniqueId());
+
+			if ( getAuthor() != null ) {
+				getAuthor().loadToForm( article.getAuthor() );
+			}
 
 			this.getImages().clear();
 			List<Image> imgs = article.getImages();
@@ -72,7 +79,6 @@ public class ArticleBean extends FormBean {
 			}
 		}
 	}
-
 	@Override
 	public void syncToEntity( KTMEntity entity ) {
 		if ( entity != null ) {
@@ -88,6 +94,7 @@ public class ArticleBean extends FormBean {
 				e.printStackTrace();
 			}
 			article.setContent( this.getContent() );
+			article.setPublishOnMain( this.getPublishOnMain() );
 
 			ArticleTypeDao articleTypeDao = KTMEMDaoFactory.getInstance()
 					.getArticleTypeDao();
@@ -178,6 +185,22 @@ public class ArticleBean extends FormBean {
 
 	public void setImages( Map<String,ImageBean> images ) {
 		this.images = images;
+	}
+
+	public DivisionBean getAuthor() {
+		return author;
+	}
+
+	public void setAuthor( DivisionBean author ) {
+		this.author = author;
+	}
+
+	public String getPublishOnMain() {
+		return publishOnMain;
+	}
+
+	public void setPublishOnMain( String publishOnMain ) {
+		this.publishOnMain = publishOnMain;
 	}
 
 }

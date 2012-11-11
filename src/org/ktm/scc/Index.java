@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import org.ktm.crypt.KTMCrypt;
 import org.ktm.servlet.AbstractServlet;
 import org.ktm.servlet.ActionForward;
 import org.ktm.utils.Globals;
@@ -46,6 +47,7 @@ public class Index extends AbstractServlet {
 			if ( pageType.equals( "t" ) ) {
 				log.info( "Go to page: " + redirectName );
 				String param = request.getParameter( "param" );
+				param = KTMCrypt.decrypt( param );
 				action = ActionForward.getAction( this,
 						request,
 						redirectName + "?" + param );

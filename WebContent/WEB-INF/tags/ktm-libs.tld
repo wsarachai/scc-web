@@ -25,6 +25,29 @@
   </attribute>
  </tag>
  <tag>
+  <name>scc_iterate</name>
+  <tag-class>org.ktm.scc.tag.SccIterateTag</tag-class>
+  <body-content>scriptless</body-content>
+  <attribute>
+   <name>id</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>name</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>property</name>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <name>module</name>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+ </tag>
+ <tag>
   <name>map_iterate</name>
   <tag-class>org.ktm.web.tags.MapIterateTag</tag-class>
   <body-content>scriptless</body-content>

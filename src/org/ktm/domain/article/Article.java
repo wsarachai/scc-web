@@ -17,99 +17,108 @@ import org.ktm.domain.party.Division;
 @Entity
 public class Article implements KTMEntity {
 
-    private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-    private Integer           uniqueId;
-    private String            identifier;
-    private Integer           version;
-    private Division          author;
-    private Date              dateCreated;
-    private String            title;
-    private String            content;
-    private ArticleType       type;
-    private List<Image>       images           = new ArrayList<Image>();
+	private Integer				uniqueId;
+	private String				identifier;
+	private Integer				version;
+	private Division			author;
+	private Date				dateCreated;
+	private String				title;
+	private String				content;
+	private String				publishOnMain;
+	private ArticleType			type;
+	private List<Image>			images				= new ArrayList<Image>();
 
-    @Id
-    @GeneratedValue
-    @Override
-    public Integer getUniqueId() {
-        return uniqueId;
-    }
+	@Id
+	@GeneratedValue
+	@Override
+	public Integer getUniqueId() {
+		return uniqueId;
+	}
 
-    @Version
-    @Override
-    public Integer getVersion() {
-        return version;
-    }
+	@Version
+	@Override
+	public Integer getVersion() {
+		return version;
+	}
 
-    @Override
-    public void setUniqueId(Integer uniqueId) {
-        this.uniqueId = uniqueId;
-    }
+	@Override
+	public void setUniqueId( Integer uniqueId ) {
+		this.uniqueId = uniqueId;
+	}
 
-    @Override
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+	@Override
+	public void setVersion( Integer version ) {
+		this.version = version;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public void setIdentifier( String identifier ) {
+		this.identifier = identifier;
+	}
 
-    @ManyToOne
-    public Division getAuthor() {
-        return author;
-    }
+	@ManyToOne
+	public Division getAuthor() {
+		return author;
+	}
 
-    public void setAuthor(Division author) {
-        this.author = author;
-    }
+	public void setAuthor( Division author ) {
+		this.author = author;
+	}
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
+	public Date getDateCreated() {
+		return dateCreated;
+	}
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+	public void setDateCreated( Date dateCreated ) {
+		this.dateCreated = dateCreated;
+	}
 
-    @Lob
-    public String getContent() {
-        return content;
-    }
+	@Lob
+	public String getContent() {
+		return content;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setContent( String content ) {
+		this.content = content;
+	}
 
-    @OneToMany
-    public List<Image> getImages() {
-        return images;
-    }
+	@OneToMany
+	public List<Image> getImages() {
+		return images;
+	}
 
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
+	public void setImages( List<Image> images ) {
+		this.images = images;
+	}
 
-    @ManyToOne
-    public ArticleType getType() {
-        return type;
-    }
+	@ManyToOne
+	public ArticleType getType() {
+		return type;
+	}
 
-    public void setType(ArticleType type) {
-        this.type = type;
-    }
+	public void setType( ArticleType type ) {
+		this.type = type;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle( String title ) {
+		this.title = title;
+	}
+
+	public String getPublishOnMain() {
+		return publishOnMain;
+	}
+
+	public void setPublishOnMain( String publishOnMain ) {
+		this.publishOnMain = publishOnMain;
+	}
 
 }

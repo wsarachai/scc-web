@@ -153,7 +153,7 @@ public class CRUDMemberServlet extends CRUDServlet {
 		empmDao.createOrUpdate( empm );
 		return ActionForward.getAction( this,
 				request,
-				"CRUDMembers?method=list&module=member&pageNumber=0",
+				"CRUDMembers?method=list&module=member&pageNumber=" + bean.getPageNumber(),
 				true );
 	}
 	public	ActionForward
@@ -190,7 +190,7 @@ public class CRUDMemberServlet extends CRUDServlet {
 		}
 		return ActionForward.getAction( this,
 				request,
-				"CRUDMembers?method=list&module=member&pageNumber=0",
+				"CRUDMembers?method=list&module=member&pageNumber=" + bean.getPageNumber(),
 				true );
 	}
 }

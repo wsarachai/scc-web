@@ -1,7 +1,6 @@
 package org.ktm.scc;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.Collection;
@@ -10,20 +9,29 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.ktm.authen.Authenticator;
 import org.ktm.core.KTMContext;
 import org.ktm.dao.KTMEMDaoFactory;
 import org.ktm.dao.article.ArticleDao;
 import org.ktm.dao.article.ArticleTypeDao;
 import org.ktm.dao.gallery.ImageDao;
+import org.ktm.dao.party.AuthenDao;
+import org.ktm.dao.party.EmploymentDao;
 import org.ktm.domain.KTMEntity;
 import org.ktm.domain.article.Article;
 import org.ktm.domain.article.ArticleType;
 import org.ktm.domain.gallery.Image;
+import org.ktm.domain.party.Authen;
+import org.ktm.domain.party.Division;
+import org.ktm.domain.party.Employee;
+import org.ktm.domain.party.Employment;
+import org.ktm.domain.party.PartyRole;
 import org.ktm.exception.CreateException;
 import org.ktm.exception.DeleteException;
 import org.ktm.exception.KTMException;
@@ -158,8 +166,11 @@ public class CRUDArticleServlet extends CRUDServlet {
 	public static synchronized void
 			doSaveArticle( ArticleBean bean, HttpServletRequest request )	throws CreateException,
 																			DeleteException {
+		HttpSession session = request.getSession();
 		ImageDao imageDao = KTMEMDaoFactory.getInstance().getImageDao();
 		ArticleDao articleDao = KTMEMDaoFactory.getInstance().getArticleDao();
+		AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
+		EmploymentDao empDao = KTMEMDaoFactory.getInstance().getEmploymentDao();
 
 		if ( articleDao != null ) {
 			Article article = null;
@@ -171,6 +182,28 @@ public class CRUDArticleServlet extends CRUDServlet {
 				article = articleDao.findByIdentifier( bean.getIdentifier() );
 				if ( article == null ) {
 					article = new Article();
+				}
+
+				// Assign Division only on create
+				Object userObj = session.getAttribute( Authenticator.PROP_USERNAME );
+				if ( userObj != null && userObj instanceof String ) {
+					String username = (String) userObj;
+					Authen auth = authenDao.findByUsername( username );
+					if ( auth != null ) {
+						Set<PartyRole> roles = (Set<PartyRole>) auth.getParty()
+								.getRoles();
+						if ( roles != null && roles.size() > 0 ) {
+							for ( PartyRole role : roles ) {
+								if ( role instanceof Employee ) {
+									Employment emp = empDao.findByClient( role.getUniqueId() );
+									PartyRole supply = emp.getSupply();
+									if ( supply != null && supply instanceof Division ) {
+										article.setAuthor( (Division) supply );
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 			bean.syncToEntity( article );
@@ -224,13 +257,10 @@ public class CRUDArticleServlet extends CRUDServlet {
 							HttpServletRequest request,
 							HttpServletResponse response )	throws ServletException,
 															IOException {
-		String result = "fail";
-		PrintWriter out = response.getWriter();
 		ArticleBean bean = (ArticleBean) form;
 
 		try {
 			doSaveArticle( bean, request );
-			result = "success";
 		}
 		catch ( CreateException e ) {
 			e.printStackTrace();
@@ -239,8 +269,10 @@ public class CRUDArticleServlet extends CRUDServlet {
 			e.printStackTrace();
 		}
 
-		out.print( result );
-		return null;
+		return ActionForward.getAction( this,
+				request,
+				"CRUDArticle?method=list&module=article&pageNumber=" + bean.getPageNumber(),
+				true );
 	}
 
 	public	ActionForward
@@ -271,7 +303,7 @@ public class CRUDArticleServlet extends CRUDServlet {
 		}
 		return ActionForward.getAction( this,
 				request,
-				"CRUDArticle?method=list&module=article&pageNumber=0",
+				"CRUDArticle?method=list&module=article&pageNumber=" + bean.getPageNumber(),
 				true );
 	}
 
