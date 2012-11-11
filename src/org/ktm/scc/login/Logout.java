@@ -13,31 +13,38 @@ import org.ktm.servlet.AbstractServlet;
 import org.ktm.servlet.ActionForward;
 import org.ktm.web.bean.FormBean;
 
-@WebServlet("/RGB7-backoffice-v4/logout")
+@WebServlet( "/RGB7-backoffice-v4/logout" )
 public class Logout extends AbstractServlet {
 
-    private static final long serialVersionUID = 592209854904210873L;
-    private final Logger      log              = Logger.getLogger(Logout.class);
+	private static final long	serialVersionUID	= 592209854904210873L;
+	private final Logger		log					= Logger.getLogger( Logout.class );
 
-    @Override
-    protected ActionForward processRequest(FormBean form, HttpServletRequest request, HttpServletResponse response, final String htmlMethod) throws ServletException, IOException {
-        log.info("Processing logout...");
+	@Override
+	protected ActionForward
+			processRequest( FormBean form,
+							HttpServletRequest request,
+							HttpServletResponse response,
+							final String htmlMethod,
+							final String htmlModule )	throws ServletException,
+														IOException {
+		log.info( "Processing logout..." );
 
-        try {
-            Authenticator auth = AuthenticatorFactory.getAuthComponentNoCreate(request.getSession());
-            if (auth != null) {
-                auth.doLogout();
-                AuthenticatorFactory.setUserLoggingOut(request);
-            }
-        } catch (AuthException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+		try {
+			Authenticator auth = AuthenticatorFactory.getAuthComponentNoCreate( request.getSession() );
+			if ( auth != null ) {
+				auth.doLogout();
+				AuthenticatorFactory.setUserLoggingOut( request );
+			}
+		}
+		catch ( AuthException e ) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    @Override
-    public String getBeanClass() {
-        return "org.ktm.web.bean.FormBean";
-    }
+	@Override
+	public String getBeanClass() {
+		return "org.ktm.web.bean.FormBean";
+	}
 
 }

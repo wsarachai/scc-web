@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.ktm.core.KTMContext;
 import org.ktm.dao.KTMEMDaoFactory;
 import org.ktm.dao.article.ArticleDao;
 import org.ktm.dao.article.ArticleTypeDao;
@@ -36,7 +37,7 @@ import org.ktm.utils.Globals;
 import org.ktm.web.bean.FormBean;
 import org.ktm.web.tags.Functions;
 
-@WebServlet( "/CRUDArticle" )
+@WebServlet( "/RGB7-backoffice-v4/CRUDArticle" )
 public class CRUDArticleServlet extends CRUDServlet {
 
 	private static final long	serialVersionUID	= 1L;
@@ -55,14 +56,15 @@ public class CRUDArticleServlet extends CRUDServlet {
 		ArticleBean bean = (ArticleBean) form;
 
 		ArticleDao articleDao = KTMEMDaoFactory.getInstance().getArticleDao();
-		Collection<?> articles = articleDao.find( bean.getPageNumber() );
+		Collection<?> articles = articleDao.find( bean.getPageNumber() + 1 );
 
+		bean.setMaxPage( KTMContext.paging );
 		bean.setMaxRows( (int) articleDao.getCount() );
 
 		if ( articles != null && articles.size() > 0 ) {
 			bean.loadFormCollection( articles );
 		}
-		return ActionForward.getUri( this, request, "article/ListArticle.jsp" );
+		return ActionForward.getUri( this, request, "ListArticles.jsp" );
 	}
 
 	public	ActionForward
@@ -100,9 +102,7 @@ public class CRUDArticleServlet extends CRUDServlet {
 				e.printStackTrace();
 			}
 
-			return ActionForward.getUri( this,
-					request,
-					"article/EditArticle.jsp" );
+			return ActionForward.getUri( this, request, "EditArticles.jsp" );
 		}
 
 		return ActionForward.getAction( this,
@@ -152,7 +152,7 @@ public class CRUDArticleServlet extends CRUDServlet {
 			e.printStackTrace();
 		}
 
-		return ActionForward.getUri( this, request, "article/EditArticle.jsp" );
+		return ActionForward.getUri( this, request, "EditArticles.jsp" );
 	}
 
 	public static synchronized void
@@ -271,16 +271,8 @@ public class CRUDArticleServlet extends CRUDServlet {
 		}
 		return ActionForward.getAction( this,
 				request,
-				"CRUDArticle?method=list",
+				"CRUDArticle?method=list&module=article&pageNumber=0",
 				true );
-	}
-
-	@Override
-	protected boolean
-			prepareRequest( HttpServletRequest request ) throws ServletException,
-														IOException {
-		super.prepareRequest( request );
-		return true;
 	}
 
 }

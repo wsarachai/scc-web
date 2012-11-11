@@ -35,7 +35,8 @@ public class Index extends AbstractServlet {
 			processRequest( FormBean form,
 							HttpServletRequest request,
 							HttpServletResponse response,
-							final String htmlMethod )	throws ServletException,
+							final String htmlMethod,
+							final String htmlModule )	throws ServletException,
 														IOException {
 		redirectName = request.getParameter( "page" );
 		ActionForward action = null;

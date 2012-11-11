@@ -47,8 +47,7 @@ public class CRUDMemberServlet extends CRUDServlet {
 		List<Person> persons = new ArrayList<Person>();
 
 		AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
-		//List<Authen> authens = (List<Authen>) authenDao.find( bean.getPageNumber() );
-		List<Authen> authens = (List<Authen>) authenDao.find( 1 );
+		List<Authen> authens = (List<Authen>) authenDao.find( bean.getPageNumber() + 1 );
 
 		bean.setMaxPage( KTMContext.paging );
 		bean.setMaxRows( (int) authenDao.getCount() );
@@ -63,13 +62,6 @@ public class CRUDMemberServlet extends CRUDServlet {
 			}
 		}
 
-		// test
-		bean.setMaxRows( 100 );
-		Person person = persons.get( 0 );
-		for ( int i = 1; i < 4; i++ ) {
-			persons.add( person );
-		}
-		// end test
 		bean.loadFormCollection( persons );
 		return ActionForward.getUri( this, request, "ListMembers.jsp" );
 	}
@@ -161,7 +153,7 @@ public class CRUDMemberServlet extends CRUDServlet {
 		empmDao.createOrUpdate( empm );
 		return ActionForward.getAction( this,
 				request,
-				"CRUDMembers?method=list",
+				"CRUDMembers?method=list&module=member&pageNumber=0",
 				true );
 	}
 	public	ActionForward
@@ -198,14 +190,7 @@ public class CRUDMemberServlet extends CRUDServlet {
 		}
 		return ActionForward.getAction( this,
 				request,
-				"CRUDMembers?method=list",
+				"CRUDMembers?method=list&module=member&pageNumber=0",
 				true );
-	}
-	@Override
-	protected boolean
-			prepareRequest( HttpServletRequest request ) throws ServletException,
-														IOException {
-		super.prepareRequest( request );
-		return true;
 	}
 }
