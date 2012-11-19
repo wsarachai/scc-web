@@ -3,9 +3,9 @@ package org.ktm.scc.bean;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import org.apache.log4j.Logger;
 import org.ktm.dao.KTMEMDaoFactory;
 import org.ktm.dao.article.ArticleTypeDao;
 import org.ktm.domain.KTMEntity;
@@ -17,25 +17,23 @@ import org.ktm.utils.DateUtils;
 import org.ktm.web.bean.FormBean;
 import org.ktm.web.tags.Functions;
 
-public class ArticleBean extends FormBean {
+public class ArticleBean extends UploadImageBean {
 
 	public static final String		UNIQUD_ID				= "ARTICLE_UNIQUD_ID";
-	private String					identifier;
-	private String					title;
-	private String					dateCreated;
+
+	private static Logger			logger					= Logger.getLogger( ArticleBean.class );
+
 	private Integer					articleTypeId;
 	private String					content;
-	private String					publishOnMain;
-	private DivisionBean			author					= new DivisionBean();
-	private Map<String,ImageBean>	images					= new HashMap<String,ImageBean>();
 
 	private List<ArticleTypeBean>	articleTypeCollection	= new ArrayList<ArticleTypeBean>();
 
 	@Override
 	public void loadFormCollection( Collection<?> entitys ) throws KTMException {
-		if ( entitys != null && entitys.size() > 0 ) {
-			getFormCollection().clear();
 
+		getFormCollection().clear();
+
+		if ( entitys != null && entitys.size() > 0 ) {
 			for ( Object entity : entitys ) {
 				if ( entity instanceof KTMEntity ) {
 					ArticleBean bean = new ArticleBean();
@@ -56,12 +54,14 @@ public class ArticleBean extends FormBean {
 			this.setTitle( article.getTitle() );
 			try {
 				this.setDateCreated( DateUtils.formatDate( article.getDateCreated() ) );
+				this.setDateModified( DateUtils.formatDate( article.getDateModified() ) );
 			}
 			catch ( ParseException e ) {
 				e.printStackTrace();
 			}
 			this.setContent( article.getContent() );
 			this.setPublishOnMain( article.getPublishOnMain() );
+
 			//this.setArticleTypeId(article.getType().getUniqueId());
 
 			if ( getAuthor() != null ) {
@@ -69,16 +69,34 @@ public class ArticleBean extends FormBean {
 			}
 
 			this.getImages().clear();
-			List<Image> imgs = article.getImages();
-			if ( imgs != null && imgs.size() > 0 ) {
-				for ( Image img : imgs ) {
-					ImageBean imgBean = new ImageBean();
-					imgBean.loadToForm( img );
-					this.getImages().put( imgBean.getPath(), imgBean );
+
+			try {
+				Set<Image> imgs = article.getImages();
+				if ( imgs != null && imgs.size() > 0 ) {
+					Image coverImage = null;
+					for ( Image img : imgs ) {
+						ImageBean imgBean = new ImageBean();
+						imgBean.loadToForm( img );
+						this.getImages().put( imgBean.getPath(), imgBean );
+
+						logger.debug( "ArticleBean [loadToForm] adding image: " + imgBean.getPath() );
+
+						if ( coverImage == null ) {
+							coverImage = img;
+						}
+					}
+
+					if ( coverImage != null ) {
+						this.setCoverImage( "GetImage?getfile&uuid=" + coverImage.getUniqueId() );
+					}
 				}
+			}
+			catch ( Exception ex ) {
+				logger.error( "Null image !!" );
 			}
 		}
 	}
+
 	@Override
 	public void syncToEntity( KTMEntity entity ) {
 		if ( entity != null ) {
@@ -86,15 +104,25 @@ public class ArticleBean extends FormBean {
 
 			Article article = (Article) entity;
 			article.setIdentifier( this.getIdentifier() );
+
+			if ( Functions.isEmpty( this.getTitle() ) ) {
+				this.setTitle( "no title" );
+			}
 			article.setTitle( this.getTitle() );
+			if ( Functions.isEmpty( this.getContent() ) ) {
+				this.setContent( "no content" );
+			}
+			article.setContent( this.getContent() );
+
+			article.setPublishOnMain( this.getPublishOnMain() );
+
 			try {
 				article.setDateCreated( DateUtils.formatString( this.getDateCreated() ) );
+				article.setDateModified( DateUtils.formatString( this.getDateModified() ) );
 			}
 			catch ( ParseException e ) {
 				e.printStackTrace();
 			}
-			article.setContent( this.getContent() );
-			article.setPublishOnMain( this.getPublishOnMain() );
 
 			ArticleTypeDao articleTypeDao = KTMEMDaoFactory.getInstance()
 					.getArticleTypeDao();
@@ -130,30 +158,6 @@ public class ArticleBean extends FormBean {
 		}
 	}
 
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier( String identifier ) {
-		this.identifier = identifier;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle( String title ) {
-		this.title = title;
-	}
-
-	public String getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated( String dateCreated ) {
-		this.dateCreated = dateCreated;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -177,30 +181,6 @@ public class ArticleBean extends FormBean {
 	public	void
 			setArticleTypeCollection( List<ArticleTypeBean> articleTypeCollection ) {
 		this.articleTypeCollection = articleTypeCollection;
-	}
-
-	public Map<String,ImageBean> getImages() {
-		return images;
-	}
-
-	public void setImages( Map<String,ImageBean> images ) {
-		this.images = images;
-	}
-
-	public DivisionBean getAuthor() {
-		return author;
-	}
-
-	public void setAuthor( DivisionBean author ) {
-		this.author = author;
-	}
-
-	public String getPublishOnMain() {
-		return publishOnMain;
-	}
-
-	public void setPublishOnMain( String publishOnMain ) {
-		this.publishOnMain = publishOnMain;
 	}
 
 }

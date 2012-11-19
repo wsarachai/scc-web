@@ -1,8 +1,7 @@
 package org.ktm.domain.article;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,25 +9,24 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
-import org.ktm.domain.KTMEntity;
 import org.ktm.domain.gallery.Image;
 import org.ktm.domain.party.Division;
+import org.ktm.domain.upload.ImageUpload;
 
 @Entity
-public class Article implements KTMEntity {
+public class Article extends ImageUpload {
 
 	private static final long	serialVersionUID	= 1L;
 
 	private Integer				uniqueId;
 	private String				identifier;
 	private Integer				version;
-	private Division			author;
-	private Date				dateCreated;
 	private String				title;
 	private String				content;
+	private Date				dateCreated;
+	private Date				dateModified;
 	private String				publishOnMain;
 	private ArticleType			type;
-	private List<Image>			images				= new ArrayList<Image>();
 
 	@Id
 	@GeneratedValue
@@ -63,11 +61,11 @@ public class Article implements KTMEntity {
 
 	@ManyToOne
 	public Division getAuthor() {
-		return author;
+		return super.getAuthor();
 	}
 
 	public void setAuthor( Division author ) {
-		this.author = author;
+		super.setAuthor( author );
 	}
 
 	public Date getDateCreated() {
@@ -88,12 +86,12 @@ public class Article implements KTMEntity {
 	}
 
 	@OneToMany
-	public List<Image> getImages() {
-		return images;
+	public Set<Image> getImages() {
+		return super.getImages();
 	}
 
-	public void setImages( List<Image> images ) {
-		this.images = images;
+	public void setImages( Set<Image> images ) {
+		super.setImages( images );
 	}
 
 	@ManyToOne
@@ -119,6 +117,14 @@ public class Article implements KTMEntity {
 
 	public void setPublishOnMain( String publishOnMain ) {
 		this.publishOnMain = publishOnMain;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified( Date dateModified ) {
+		this.dateModified = dateModified;
 	}
 
 }

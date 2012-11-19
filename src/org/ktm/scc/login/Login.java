@@ -3,7 +3,6 @@ package org.ktm.scc.login;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,13 +30,11 @@ public class Login extends AbstractServlet {
 	}
 
 	@Override
-	protected ActionForward
-			processRequest( FormBean form,
-							HttpServletRequest request,
-							HttpServletResponse response,
-							final String htmlMethod,
-							final String htmlModule )	throws ServletException,
-														IOException {
+	protected ActionForward processRequest( FormBean form,
+											HttpServletRequest request,
+											HttpServletResponse response,
+											final String htmlMethod,
+											final String htmlModule ) {
 		ServletContext servletContext = request.getServletContext();
 		LoginBean bean = (LoginBean) form;
 		String message = "";
@@ -95,31 +92,38 @@ public class Login extends AbstractServlet {
 			}
 		}
 
-		response.setCharacterEncoding( "UTF-8" );
-		PrintWriter out = response.getWriter();
-		JSONObject json = new JSONObject();
+		try {
+			response.setCharacterEncoding( "UTF-8" );
+			PrintWriter out = response.getWriter();
+			JSONObject json = new JSONObject();
 
-		if ( auth != null && auth.isUserLoggedIn() ) {
-			HttpSession session = request.getSession();
-			session.setAttribute( Authenticator.PROP_USERNAME,
-					auth.getProperty( Authenticator.PROP_USERNAME ) );
-			session.setAttribute( Authenticator.PROP_PASSWORD,
-					auth.getProperty( Authenticator.PROP_PASSWORD ) );
-			json.put( "result", "success" );
-		} else {
-			bean.setLoginuser( this.getCookieValue( request,
-					Authenticator.PROP_USERNAME,
-					"" ) );
-			bean.setLoginpassword( this.getCookieValue( request,
-					Authenticator.PROP_PASSWORD,
-					"" ) );
-			bean.setUseCookie( this.getCookieValue( request, "saveCookie", "" ) );
-			json.put( "result", "fail" );
+			if ( auth != null && auth.isUserLoggedIn() ) {
+				HttpSession session = request.getSession();
+				session.setAttribute( Authenticator.PROP_USERNAME,
+						auth.getProperty( Authenticator.PROP_USERNAME ) );
+				session.setAttribute( Authenticator.PROP_PASSWORD,
+						auth.getProperty( Authenticator.PROP_PASSWORD ) );
+				json.put( "result", "success" );
+			} else {
+				bean.setLoginuser( this.getCookieValue( request,
+						Authenticator.PROP_USERNAME,
+						"" ) );
+				bean.setLoginpassword( this.getCookieValue( request,
+						Authenticator.PROP_PASSWORD,
+						"" ) );
+				bean.setUseCookie( this.getCookieValue( request,
+						"saveCookie",
+						"" ) );
+				json.put( "result", "fail" );
+			}
+
+			json.put( "forwardUri", action.getForwardUri() );
+			json.put( "message", message );
+			out.print( json.toString() );
 		}
-
-		json.put( "forwardUri", action.getForwardUri() );
-		json.put( "message", message );
-		out.print( json.toString() );
+		catch ( IOException ex ) {
+			ex.printStackTrace();
+		}
 
 		return null;
 	}

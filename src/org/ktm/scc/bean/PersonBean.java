@@ -14,161 +14,164 @@ import org.ktm.utils.DateUtils;
 
 public class PersonBean extends PartyBean {
 
-    private String    citizenId;
-    private String    prename;
-    private String    firstname;
-    private String    lastname;
-    private String    birthDay;
-    private ISOGender gender;
+	private String		citizenId;
+	private String		prename;
+	private String		firstname;
+	private String		lastname;
+	private String		birthDay;
+	private ISOGender	gender;
 
-    private String    loginuser;
-    private String    loginpassword;
+	private String		loginuser;
+	private String		loginpassword;
 
-    @Override
-    public void reset() {
-        super.reset();
-        setGender(ISOGender.MALE);
-    }
+	@Override
+	public void reset() {
+		super.reset();
+		setGender( ISOGender.MALE );
+	}
 
-    @Override
-    public void loadToForm(KTMEntity entity) {
-        if (entity != null && entity instanceof Person) {
-            super.loadToForm(entity);
-            Person person = (Person) entity;
-            this.setUniqueId(String.valueOf(person.getUniqueId()));
-            this.setPrename(person.getPrename());
-            this.setFirstname(person.getFirstname());
-            this.setLastname(person.getLastname());
-            String identifier = "";
-            if (person.getIdentifier() != null) {
-                identifier = person.getIdentifier().getIdentifier();
-            }
-            this.setCitizenId(identifier);
-            try {
-                this.setBirthDay(DateUtils.formatDate(person.getBirthDay()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            this.setGender(person.getGender());
+	@Override
+	public void loadToForm( KTMEntity entity ) {
+		if ( entity != null && entity instanceof Person ) {
+			super.loadToForm( entity );
+			Person person = (Person) entity;
+			this.setUniqueId( String.valueOf( person.getUniqueId() ) );
+			this.setPrename( person.getPrename() );
+			this.setFirstname( person.getFirstname() );
+			this.setLastname( person.getLastname() );
+			String identifier = "";
+			if ( person.getIdentifier() != null ) {
+				identifier = person.getIdentifier().getIdentifier();
+			}
+			this.setCitizenId( identifier );
+			try {
+				this.setBirthDay( DateUtils.formatDate( person.getBirthDay() ) );
+			}
+			catch ( ParseException e ) {
+				e.printStackTrace();
+			}
+			this.setGender( person.getGender() );
 
-            AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
-            Authen authen = authenDao.findByPartyId(person.getUniqueId());
-            if (authen != null) {
-                this.setLoginuser(authen.getUsername());
-                this.setLoginpassword(authen.getPassword());
-            }
-        }
-    }
+			AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
+			Authen authen = authenDao.findByPartyId( person.getUniqueId() );
+			if ( authen != null ) {
+				this.setLoginuser( authen.getUsername() );
+				this.setLoginpassword( authen.getPassword() );
+			}
+		}
+	}
 
-    @Override
-    public void syncToEntity(KTMEntity entity) {
-        if (entity != null && entity instanceof Person) {
-            super.syncToEntity(entity);
+	@Override
+	public void syncToEntity( KTMEntity entity ) {
+		if ( entity != null && entity instanceof Person ) {
+			super.syncToEntity( entity );
 
-            Person person = (Person) entity;
-            person.setGender(this.getGender());
-            person.setPrename(this.getPrename());
-            person.setFirstname(this.getFirstname());
-            person.setLastname(this.getLastname());
-            PartyIdentifier identifier = person.getIdentifier();
-            if (identifier == null) {
-                identifier = new PartyIdentifier();
-                person.setIdentifier(identifier);
-            }
-            identifier.setIdentifier(this.getCitizenId());
-            person.setBirthDay(this.getBirthDay());
+			Person person = (Person) entity;
+			person.setGender( this.getGender() );
+			person.setPrename( this.getPrename() );
+			person.setFirstname( this.getFirstname() );
+			person.setLastname( this.getLastname() );
+			PartyIdentifier identifier = person.getIdentifier();
+			if ( identifier == null ) {
+				identifier = new PartyIdentifier();
+				person.setIdentifier( identifier );
+			}
+			identifier.setIdentifier( this.getCitizenId() );
+			person.setBirthDay( this.getBirthDay() );
 
-            AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
-            Authen authen = authenDao.findByPartyId(person.getUniqueId());
-            if (authen != null) {
-                authen.setUsername(this.getLoginuser());
-                authen.setPassword(this.getLoginpassword());
-                try {
-                    authenDao.createOrUpdate(authen);
-                } catch (CreateException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+			AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
+			Authen authen = authenDao.findByPartyId( person.getUniqueId() );
+			if ( authen != null ) {
+				authen.setUsername( this.getLoginuser() );
+				authen.setPassword( this.getLoginpassword() );
+				try {
+					authenDao.createOrUpdate( authen );
+				}
+				catch ( CreateException e ) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
-    @Override
-    public void loadFormCollection(Collection<?> entitys) {
-        if (entitys != null) {
-            getFormCollection().clear();
+	@Override
+	public void loadFormCollection( Collection<?> entitys ) {
 
-            for (Object entity : entitys) {
-                if (entity instanceof Person) {
-                    PersonBean bean = new PersonBean();
-                    bean.loadToForm((Person) entity);
-                    getFormCollection().add(bean);
-                }
-            }
-        }
-    }
+		getFormCollection().clear();
 
-    public String getPrename() {
-        return prename;
-    }
+		if ( entitys != null && entitys.size() > 0 ) {
+			for ( Object entity : entitys ) {
+				if ( entity instanceof Person ) {
+					PersonBean bean = new PersonBean();
+					bean.loadToForm( (Person) entity );
+					getFormCollection().add( bean );
+				}
+			}
+		}
+	}
 
-    public void setPrename(String prename) {
-        this.prename = prename;
-    }
+	public String getPrename() {
+		return prename;
+	}
 
-    public String getFirstname() {
-        return firstname;
-    }
+	public void setPrename( String prename ) {
+		this.prename = prename;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public String getLastname() {
-        return lastname;
-    }
+	public void setFirstname( String firstname ) {
+		this.firstname = firstname;
+	}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public String getLastname() {
+		return lastname;
+	}
 
-    public String getBirthDay() {
-        return birthDay;
-    }
+	public void setLastname( String lastname ) {
+		this.lastname = lastname;
+	}
 
-    public void setBirthDay(String birthDay) {
-        this.birthDay = birthDay;
-    }
+	public String getBirthDay() {
+		return birthDay;
+	}
 
-    public ISOGender getGender() {
-        return gender;
-    }
+	public void setBirthDay( String birthDay ) {
+		this.birthDay = birthDay;
+	}
 
-    public void setGender(ISOGender gender) {
-        this.gender = gender;
-    }
+	public ISOGender getGender() {
+		return gender;
+	}
 
-    public String getCitizenId() {
-        return citizenId;
-    }
+	public void setGender( ISOGender gender ) {
+		this.gender = gender;
+	}
 
-    public void setCitizenId(String citizenId) {
-        this.citizenId = citizenId;
-    }
+	public String getCitizenId() {
+		return citizenId;
+	}
 
-    public String getLoginuser() {
-        return loginuser;
-    }
+	public void setCitizenId( String citizenId ) {
+		this.citizenId = citizenId;
+	}
 
-    public void setLoginuser(String loginuser) {
-        this.loginuser = loginuser;
-    }
+	public String getLoginuser() {
+		return loginuser;
+	}
 
-    public String getLoginpassword() {
-        return loginpassword;
-    }
+	public void setLoginuser( String loginuser ) {
+		this.loginuser = loginuser;
+	}
 
-    public void setLoginpassword(String loginpassword) {
-        this.loginpassword = loginpassword;
-    }
+	public String getLoginpassword() {
+		return loginpassword;
+	}
+
+	public void setLoginpassword( String loginpassword ) {
+		this.loginpassword = loginpassword;
+	}
 
 }

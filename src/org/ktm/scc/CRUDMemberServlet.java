@@ -63,6 +63,7 @@ public class CRUDMemberServlet extends CRUDServlet {
 		}
 
 		bean.loadFormCollection( persons );
+
 		return ActionForward.getUri( this, request, "ListMembers.jsp" );
 	}
 	private void getDivisionCollection( MemberBean bean ) {
@@ -146,8 +147,6 @@ public class CRUDMemberServlet extends CRUDServlet {
 			Division division = (Division) divisionDao.get( bean.getDivisionId() );
 			if ( division != null ) {
 				empm.setSupply( division );
-			} else {
-				throw new KTMException();
 			}
 		}
 		empmDao.createOrUpdate( empm );

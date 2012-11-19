@@ -33,6 +33,21 @@
 		</context-param>
 		<context-param>
 				<param-name>paging</param-name>
-				<param-value>5</param-value>
+				<param-value>6</param-value>
 		</context-param>
+
+		<!-- Granule Tag required servlet declarations -->
+		<servlet>
+				<servlet-name>CompressServlet</servlet-name>
+				<servlet-class>com.granule.CompressServlet</servlet-class>
+				<load-on-startup>1</load-on-startup>
+		</servlet>
+		<servlet-mapping>
+				<servlet-name>CompressServlet</servlet-name>
+				<url-pattern>/combined.js</url-pattern>
+		</servlet-mapping>
+		<servlet-mapping>
+				<servlet-name>CompressServlet</servlet-name>
+				<url-pattern>/combined.css</url-pattern>
+		</servlet-mapping>
 </web-app>

@@ -1,54 +1,39 @@
 package org.ktm.scc;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.ktm.authen.Authenticator;
-import org.ktm.core.KTMContext;
+import org.apache.log4j.Logger;
+import org.ktm.crypt.KTMCrypt;
+import org.ktm.dao.Dao;
 import org.ktm.dao.KTMEMDaoFactory;
 import org.ktm.dao.article.ArticleDao;
 import org.ktm.dao.article.ArticleTypeDao;
-import org.ktm.dao.gallery.ImageDao;
-import org.ktm.dao.party.AuthenDao;
-import org.ktm.dao.party.EmploymentDao;
 import org.ktm.domain.KTMEntity;
 import org.ktm.domain.article.Article;
 import org.ktm.domain.article.ArticleType;
-import org.ktm.domain.gallery.Image;
-import org.ktm.domain.party.Authen;
-import org.ktm.domain.party.Division;
-import org.ktm.domain.party.Employee;
-import org.ktm.domain.party.Employment;
-import org.ktm.domain.party.PartyRole;
+import org.ktm.domain.upload.ImageUpload;
 import org.ktm.exception.CreateException;
 import org.ktm.exception.DeleteException;
 import org.ktm.exception.KTMException;
 import org.ktm.scc.bean.ArticleBean;
 import org.ktm.scc.bean.ArticleTypeBean;
-import org.ktm.scc.bean.ImageBean;
+import org.ktm.scc.bean.UploadImageBean;
 import org.ktm.servlet.ActionForward;
-import org.ktm.servlet.CRUDServlet;
 import org.ktm.utils.DateUtils;
-import org.ktm.utils.Globals;
 import org.ktm.web.bean.FormBean;
-import org.ktm.web.tags.Functions;
 
 @WebServlet( "/RGB7-backoffice-v4/CRUDArticle" )
-public class CRUDArticleServlet extends CRUDServlet {
+public class CRUDArticleServlet extends CRUDAbstractImgUpload {
 
 	private static final long	serialVersionUID	= 1L;
+	private static Logger		logger				= Logger.getLogger( CRUDGalleryServlet.class );
 
 	@Override
 	public String getBeanClass() {
@@ -61,17 +46,13 @@ public class CRUDArticleServlet extends CRUDServlet {
 							HttpServletResponse response )	throws ServletException,
 															IOException,
 															KTMException {
-		ArticleBean bean = (ArticleBean) form;
 
-		ArticleDao articleDao = KTMEMDaoFactory.getInstance().getArticleDao();
-		Collection<?> articles = articleDao.find( bean.getPageNumber() + 1 );
+		logger.debug( ">>> listGallery: begin" );
 
-		bean.setMaxPage( KTMContext.paging );
-		bean.setMaxRows( (int) articleDao.getCount() );
+		listData( form );
 
-		if ( articles != null && articles.size() > 0 ) {
-			bean.loadFormCollection( articles );
-		}
+		logger.debug( ">>> listGallery: begin" );
+
 		return ActionForward.getUri( this, request, "ListArticles.jsp" );
 	}
 
@@ -104,7 +85,7 @@ public class CRUDArticleServlet extends CRUDServlet {
 			session.setAttribute( ArticleBean.UNIQUD_ID, bean.getIdentifier() );
 			session.setAttribute( bean.getIdentifier(), bean );
 			try {
-				bean.setDateCreated( DateUtils.formatDate( new Date() ) );
+				bean.setDateModified( DateUtils.formatDate( new Date() ) );
 			}
 			catch ( ParseException e ) {
 				e.printStackTrace();
@@ -113,9 +94,13 @@ public class CRUDArticleServlet extends CRUDServlet {
 			return ActionForward.getUri( this, request, "EditArticles.jsp" );
 		}
 
+		if ( bean.getServlet() != null && bean.getServlet() instanceof CRUDArticleServlet ) {
+			( (CRUDArticleServlet) bean.getServlet() ).resetAllCRUDCollection( session );
+		}
+
 		return ActionForward.getAction( this,
 				request,
-				"CRUDArticle?method=list",
+				"index?page=CRUDArticle&t=t&param=" + KTMCrypt.encrypt( "method=list&module=article&pageNumber=" + bean.getPageNumber() ),
 				true );
 	}
 
@@ -127,7 +112,7 @@ public class CRUDArticleServlet extends CRUDServlet {
 		HttpSession session = request.getSession();
 		ArticleBean bean = (ArticleBean) form;
 
-		bean.getImages().clear();
+		logger.debug( ">>> newArticle: begin" );
 
 		// ArticleType list
 		ArticleTypeDao articleTypeDao = KTMEMDaoFactory.getInstance()
@@ -143,113 +128,11 @@ public class CRUDArticleServlet extends CRUDServlet {
 			}
 		}
 
-		// New Article
-		try {
-			String uuid = Globals.generateUniqueId();
-			session.setAttribute( ArticleBean.UNIQUD_ID, uuid );
-			session.setAttribute( uuid, bean );
-			bean.setIdentifier( uuid );
-			try {
-				bean.setDateCreated( DateUtils.formatDate( new Date() ) );
-			}
-			catch ( ParseException e ) {
-				e.printStackTrace();
-			}
-		}
-		catch ( NoSuchAlgorithmException e ) {
-			e.printStackTrace();
-		}
+		newImageUpload( bean, session );
+
+		logger.debug( ">>> newArticle: end" );
 
 		return ActionForward.getUri( this, request, "EditArticles.jsp" );
-	}
-
-	public static synchronized void
-			doSaveArticle( ArticleBean bean, HttpServletRequest request )	throws CreateException,
-																			DeleteException {
-		HttpSession session = request.getSession();
-		ImageDao imageDao = KTMEMDaoFactory.getInstance().getImageDao();
-		ArticleDao articleDao = KTMEMDaoFactory.getInstance().getArticleDao();
-		AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
-		EmploymentDao empDao = KTMEMDaoFactory.getInstance().getEmploymentDao();
-
-		if ( articleDao != null ) {
-			Article article = null;
-			if ( !Functions.isEmpty( bean.getUniqueId() ) ) {
-				Integer aid = Integer.valueOf( bean.getUniqueId() );
-				article = (Article) articleDao.get( aid );
-			}
-			if ( article == null ) {
-				article = articleDao.findByIdentifier( bean.getIdentifier() );
-				if ( article == null ) {
-					article = new Article();
-				}
-
-				// Assign Division only on create
-				Object userObj = session.getAttribute( Authenticator.PROP_USERNAME );
-				if ( userObj != null && userObj instanceof String ) {
-					String username = (String) userObj;
-					Authen auth = authenDao.findByUsername( username );
-					if ( auth != null ) {
-						Set<PartyRole> roles = (Set<PartyRole>) auth.getParty()
-								.getRoles();
-						if ( roles != null && roles.size() > 0 ) {
-							for ( PartyRole role : roles ) {
-								if ( role instanceof Employee ) {
-									Employment emp = empDao.findByClient( role.getUniqueId() );
-									PartyRole supply = emp.getSupply();
-									if ( supply != null && supply instanceof Division ) {
-										article.setAuthor( (Division) supply );
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			bean.syncToEntity( article );
-
-			List<Image> imgs = article.getImages();
-			Map<String,Image> imageKey = new HashMap<String,Image>();
-			for ( Image img : imgs ) {
-				if ( !bean.getImages().containsKey( img.getPath() ) ) {
-					// delete
-					imageDao.getCrudAdmin().addDeleted( img );
-				} else {
-					// keep remain to map
-					imageKey.put( img.getPath(), img );
-				}
-			}
-			Iterator<String> it = bean.getImages().keySet().iterator();
-			while ( it.hasNext() ) {
-				String key = it.next();
-				if ( !imageKey.containsKey( key ) ) {
-					// add new
-					ImageBean imageBean = bean.getImages().get( key );
-					Image newImage = new Image();
-					imageBean.syncToEntity( newImage );
-					imageDao.getCrudAdmin().addCreated( newImage );
-				}
-			}
-
-			for ( Object obj : imageDao.getCrudAdmin().getDeletedCollection() ) {
-				if ( obj instanceof Image ) {
-					article.getImages().remove( obj );
-				}
-			}
-			for ( Object obj : imageDao.getCrudAdmin().getCreatedCollection() ) {
-				if ( obj instanceof Image ) {
-					imageDao.createOrUpdate( (KTMEntity) obj );
-					article.getImages().add( (Image) obj );
-				}
-			}
-			articleDao.createOrUpdate( article );
-
-			for ( Object obj : imageDao.getCrudAdmin().getDeletedCollection() ) {
-				if ( obj instanceof Image ) {
-					imageDao.delete( ( (Image) obj ).getUniqueId() );
-				}
-			}
-		}
 	}
 
 	public	ActionForward
@@ -260,7 +143,7 @@ public class CRUDArticleServlet extends CRUDServlet {
 		ArticleBean bean = (ArticleBean) form;
 
 		try {
-			doSaveArticle( bean, request );
+			doSaveImageUpload( bean, request );
 		}
 		catch ( CreateException e ) {
 			e.printStackTrace();
@@ -269,9 +152,13 @@ public class CRUDArticleServlet extends CRUDServlet {
 			e.printStackTrace();
 		}
 
+		if ( bean.getServlet() != null && bean.getServlet() instanceof CRUDArticleServlet ) {
+			( (CRUDArticleServlet) bean.getServlet() ).resetAllCRUDCollection( request.getSession() );
+		}
+
 		return ActionForward.getAction( this,
 				request,
-				"CRUDArticle?method=list&module=article&pageNumber=" + bean.getPageNumber(),
+				"index?page=CRUDArticle&t=t&param=" + KTMCrypt.encrypt( "method=list&module=article&pageNumber=" + bean.getPageNumber() ),
 				true );
 	}
 
@@ -280,31 +167,31 @@ public class CRUDArticleServlet extends CRUDServlet {
 						HttpServletRequest request,
 						HttpServletResponse response )	throws ServletException,
 														IOException {
-		ArticleBean bean = (ArticleBean) form;
-		ImageDao imageDao = KTMEMDaoFactory.getInstance().getImageDao();
-		ArticleDao articleDao = KTMEMDaoFactory.getInstance().getArticleDao();
-		Article article = (Article) articleDao.get( Integer.valueOf( bean.getUniqueId() ) );
-		if ( article != null ) {
-			for ( Image img : article.getImages() ) {
-				imageDao.getCrudAdmin().addDeleted( img );
-			}
-			article.getImages().clear();
-			try {
-				articleDao.delete( article );
+		logger.debug( ">>> delArticle: begin" );
 
-				for ( Object obj : imageDao.getCrudAdmin()
-						.getDeletedCollection() ) {
-					imageDao.delete( ( (Image) obj ).getUniqueId() );
-				}
-			}
-			catch ( DeleteException e ) {
-				e.printStackTrace();
-			}
-		}
+		delImageUpload( (UploadImageBean) form, request.getSession() );
+
+		logger.debug( ">>> delArticle: eng" );
+
 		return ActionForward.getAction( this,
 				request,
-				"CRUDArticle?method=list&module=article&pageNumber=" + bean.getPageNumber(),
+				"index?page=CRUDArticle&t=t&param=" + KTMCrypt.encrypt( "method=list&module=article&pageNumber=" + form.getPageNumber() ),
 				true );
+	}
+
+	@Override
+	protected Dao getDao() {
+		return KTMEMDaoFactory.getInstance().getArticleDao();
+	}
+
+	@Override
+	protected ImageUpload getNewEntity() {
+		return new Article();
+	}
+
+	@Override
+	protected String getUUID() {
+		return ArticleBean.UNIQUD_ID;
 	}
 
 }

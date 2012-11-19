@@ -284,9 +284,14 @@
                 Display current username
                 
       </description>
-  <name>ShowUsername</name>
-  <tag-class>org.ktm.scc.tag.ShowUsernameTag</tag-class>
+  <name>ShowUserInfo</name>
+  <tag-class>org.ktm.scc.tag.ShowUserInfoTag</tag-class>
   <body-content>empty</body-content>
+  <attribute>
+   <name>info</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
  </tag>
  <tag>
   <name>ShowSideBar</name>

@@ -1,7 +1,6 @@
 package org.ktm.scc.login;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,13 +19,11 @@ public class Logout extends AbstractServlet {
 	private final Logger		log					= Logger.getLogger( Logout.class );
 
 	@Override
-	protected ActionForward
-			processRequest( FormBean form,
-							HttpServletRequest request,
-							HttpServletResponse response,
-							final String htmlMethod,
-							final String htmlModule )	throws ServletException,
-														IOException {
+	protected ActionForward processRequest( FormBean form,
+											HttpServletRequest request,
+											HttpServletResponse response,
+											final String htmlMethod,
+											final String htmlModule ) {
 		log.info( "Processing logout..." );
 
 		try {
@@ -39,6 +36,14 @@ public class Logout extends AbstractServlet {
 		catch ( AuthException e ) {
 			e.printStackTrace();
 		}
+
+		try {
+			response.sendRedirect( "../start.jsp" );
+		}
+		catch ( IOException e ) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 

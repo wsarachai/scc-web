@@ -1,8 +1,6 @@
 package org.ktm.scc;
 
-import java.io.IOException;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,13 +30,11 @@ public class Index extends AbstractServlet {
 	}
 
 	@Override
-	protected ActionForward
-			processRequest( FormBean form,
-							HttpServletRequest request,
-							HttpServletResponse response,
-							final String htmlMethod,
-							final String htmlModule )	throws ServletException,
-														IOException {
+	protected ActionForward processRequest( FormBean form,
+											HttpServletRequest request,
+											HttpServletResponse response,
+											final String htmlMethod,
+											final String htmlModule ) {
 		redirectName = request.getParameter( "page" );
 		ActionForward action = null;
 
@@ -52,11 +48,12 @@ public class Index extends AbstractServlet {
 						request,
 						redirectName + "?" + param );
 			}
-		}
-		if ( redirectName == null ) {
+		} else if ( redirectName == null ) {
 			ServletContext context = request.getServletContext();
 			String mainPage = context.getInitParameter( Globals.MAIN_PAGE );
 			action = ActionForward.getAction( this, request, mainPage );
+		} else {
+			action = ActionForward.getAction( this, request, redirectName );
 		}
 		return action;
 	}

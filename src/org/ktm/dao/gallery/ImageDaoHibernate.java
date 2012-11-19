@@ -1,7 +1,7 @@
 package org.ktm.dao.gallery;
 
 import org.ktm.dao.AbstractHibernateStorageDao;
-import com.sun.medialib.mlib.Image;
+import org.ktm.domain.gallery.Image;
 
 public class ImageDaoHibernate extends AbstractHibernateStorageDao implements
 	ImageDao {

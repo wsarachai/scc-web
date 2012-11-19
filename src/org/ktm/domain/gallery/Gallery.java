@@ -1,25 +1,29 @@
 package org.ktm.domain.gallery;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import org.ktm.domain.KTMEntity;
+import javax.persistence.Version;
 import org.ktm.domain.party.Division;
+import org.ktm.domain.upload.ImageUpload;
 
 @Entity
-public class Gallery implements KTMEntity {
+public class Gallery extends ImageUpload {
 
 	private static final long	serialVersionUID	= 1L;
 
 	private Integer				uniqueId;
 	private Integer				version;
+	private String				identifier;
+	private String				title;
 	private String				description;
-	private Division			auther;
 	private Date				dateCreated;
-	private List<Image>			images;
+	private Date				dateModified;
+	private String				publishOnMain;
 
 	@Id
 	@GeneratedValue
@@ -29,6 +33,7 @@ public class Gallery implements KTMEntity {
 	}
 
 	@Override
+	@Version
 	public Integer getVersion() {
 		return version;
 	}
@@ -52,20 +57,21 @@ public class Gallery implements KTMEntity {
 	}
 
 	@OneToMany
-	public List<Image> getImages() {
-		return images;
+	public Set<Image> getImages() {
+		return super.getImages();
 	}
 
-	public void setImages( List<Image> images ) {
-		this.images = images;
+	public void setImages( Set<Image> images ) {
+		super.setImages( images );
 	}
 
-	public Division getAuther() {
-		return auther;
+	@ManyToOne
+	public Division getAuthor() {
+		return super.getAuthor();
 	}
 
-	public void setAuther( Division auther ) {
-		this.auther = auther;
+	public void setAuthor( Division author ) {
+		super.setAuthor( author );
 	}
 
 	public Date getDateCreated() {
@@ -74,6 +80,38 @@ public class Gallery implements KTMEntity {
 
 	public void setDateCreated( Date dateCreated ) {
 		this.dateCreated = dateCreated;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle( String title ) {
+		this.title = title;
+	}
+
+	public String getPublishOnMain() {
+		return publishOnMain;
+	}
+
+	public void setPublishOnMain( String publishOnMain ) {
+		this.publishOnMain = publishOnMain;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier( String identifier ) {
+		this.identifier = identifier;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified( Date dateModified ) {
+		this.dateModified = dateModified;
 	}
 
 }

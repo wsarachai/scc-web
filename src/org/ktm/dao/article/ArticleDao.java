@@ -1,13 +1,10 @@
 package org.ktm.dao.article;
 
 import java.util.Collection;
-import org.ktm.dao.Dao;
+import org.ktm.dao.image_upload.ImageUploadDao;
 import org.ktm.domain.KTMEntity;
-import org.ktm.domain.article.Article;
 
-public interface ArticleDao extends Dao {
+public interface ArticleDao extends ImageUploadDao {
 
-    public Collection<KTMEntity> findAll();
-
-    public Article findByIdentifier(String identifier);
+	public Collection<KTMEntity> findAll();
 }
