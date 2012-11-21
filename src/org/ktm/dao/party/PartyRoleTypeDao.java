@@ -6,8 +6,8 @@ import org.ktm.domain.party.PartyRoleType;
 
 public interface PartyRoleTypeDao extends Dao {
 
-    public List<PartyRoleType> findAll();
+	public List<PartyRoleType> findAll();
 
-    public PartyRoleType findByName(String name);
+	public PartyRoleType findByName( String name );
 
 }

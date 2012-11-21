@@ -6,7 +6,7 @@ import org.ktm.domain.party.Customer;
 
 public interface CustomerDao extends Dao {
 
-    @Override
-    public Collection<Customer> findAll();
+	@Override
+	public Collection<Customer> findAll();
 
 }

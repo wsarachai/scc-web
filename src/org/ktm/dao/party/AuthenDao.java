@@ -5,8 +5,8 @@ import org.ktm.domain.party.Authen;
 
 public interface AuthenDao extends Dao {
 
-    public Authen findByUsername(String username);
+	public Authen findByUsername( String username );
 
-    public Authen findByPartyId(Integer id);
+	public Authen findByPartyId( Integer id );
 
 }

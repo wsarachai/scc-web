@@ -13,74 +13,75 @@ import org.ktm.utils.DateUtils;
 @Entity
 public class Person extends Party {
 
-    private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-    private String            prename;
-    private String            firstname;
-    private String            lastname;
-    private Date              birthDay;
-    private ISOGender         gender;
+	private String				prename;
+	private String				firstname;
+	private String				lastname;
+	private Date				birthDay;
+	private ISOGender			gender;
 
-    @Column(name = "prename")
-    public String getPrename() {
-        return prename;
-    }
+	@Column( name = "prename" )
+	public String getPrename() {
+		return prename;
+	}
 
-    public void setPrename(String prename) {
-        this.prename = prename;
-    }
+	public void setPrename( String prename ) {
+		this.prename = prename;
+	}
 
-    @Column(name = "firstname")
-    public String getFirstname() {
-        return firstname;
-    }
+	@Column( name = "firstname" )
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public void setFirstname( String firstname ) {
+		this.firstname = firstname;
+	}
 
-    @Column(name = "lastname")
-    public String getLastname() {
-        return lastname;
-    }
+	@Column( name = "lastname" )
+	public String getLastname() {
+		return lastname;
+	}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public void setLastname( String lastname ) {
+		this.lastname = lastname;
+	}
 
-    @Column(name = "birthDay")
-    public Date getBirthDay() {
-        return birthDay;
-    }
+	@Column( name = "birthDay" )
+	public Date getBirthDay() {
+		return birthDay;
+	}
 
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
+	public void setBirthDay( Date birthDay ) {
+		this.birthDay = birthDay;
+	}
 
-    public void setBirthDay(String birthDay) {
-        try {
-            setBirthDay(DateUtils.formatString(birthDay));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
+	public void setBirthDay( String birthDay ) {
+		try {
+			setBirthDay( DateUtils.formatString( birthDay ) );
+		}
+		catch ( ParseException e ) {
+			e.printStackTrace();
+		}
+	}
 
-    @Column(name = "iso_gender")
-    public ISOGender getGender() {
-        return gender;
-    }
+	@Column( name = "iso_gender" )
+	public ISOGender getGender() {
+		return gender;
+	}
 
-    public void setGender(ISOGender gender) {
-        this.gender = gender;
-    }
+	public void setGender( ISOGender gender ) {
+		this.gender = gender;
+	}
 
-    /*
-     * This function is used for the Autocompleter example with seperate label
-     * element.
-     */
-    @Transient
-    public String getLabel() {
-        return this.prename + this.firstname + " " + this.lastname;
-    }
+	/*
+	 * This function is used for the Autocompleter example with seperate label
+	 * element.
+	 */
+	@Transient
+	public String getLabel() {
+		return this.prename + this.firstname + " " + this.lastname;
+	}
 
 }

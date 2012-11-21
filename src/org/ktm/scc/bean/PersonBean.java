@@ -9,7 +9,6 @@ import org.ktm.domain.party.Authen;
 import org.ktm.domain.party.ISOGender;
 import org.ktm.domain.party.PartyIdentifier;
 import org.ktm.domain.party.Person;
-import org.ktm.exception.CreateException;
 import org.ktm.utils.DateUtils;
 
 public class PersonBean extends PartyBean {
@@ -79,18 +78,7 @@ public class PersonBean extends PartyBean {
 			identifier.setIdentifier( this.getCitizenId() );
 			person.setBirthDay( this.getBirthDay() );
 
-			AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
-			Authen authen = authenDao.findByPartyId( person.getUniqueId() );
-			if ( authen != null ) {
-				authen.setUsername( this.getLoginuser() );
-				authen.setPassword( this.getLoginpassword() );
-				try {
-					authenDao.createOrUpdate( authen );
-				}
-				catch ( CreateException e ) {
-					e.printStackTrace();
-				}
-			}
+			// Authen is not need to sync
 		}
 	}
 

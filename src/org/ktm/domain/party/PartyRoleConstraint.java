@@ -15,45 +15,45 @@ import javax.persistence.Version;
 @Entity
 public class PartyRoleConstraint implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-    private Integer           uniqueId;
-    private Integer           version;
-    private String            typeOfParty;
+	private Integer				uniqueId;
+	private Integer				version;
+	private String				typeOfParty;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "uniqueId", nullable = false)
-    public Integer getUniqueId() {
-        return uniqueId;
-    }
+	@Id
+	@GeneratedValue
+	@Column( name = "uniqueId", nullable = false )
+	public Integer getUniqueId() {
+		return uniqueId;
+	}
 
-    public void setUniqueId(Integer uniqueId) {
-        this.uniqueId = uniqueId;
-    }
+	public void setUniqueId( Integer uniqueId ) {
+		this.uniqueId = uniqueId;
+	}
 
-    @Version
-    @Column(name = "version")
-    public Integer getVersion() {
-        return version;
-    }
+	@Version
+	@Column( name = "version" )
+	public Integer getVersion() {
+		return version;
+	}
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+	public void setVersion( Integer version ) {
+		this.version = version;
+	}
 
-    @Column(name = "typeOfParty")
-    public String getTypeOfParty() {
-        return typeOfParty;
-    }
+	@Column( name = "typeOfParty" )
+	public String getTypeOfParty() {
+		return typeOfParty;
+	}
 
-    public void setTypeOfParty(String typeOfParty) {
-        this.typeOfParty = typeOfParty;
-    }
+	public void setTypeOfParty( String typeOfParty ) {
+		this.typeOfParty = typeOfParty;
+	}
 
-    @Transient
-    public boolean canPlayRole(Party party) {
-        return true;
-    }
+	@Transient
+	public boolean canPlayRole( Party party ) {
+		return true;
+	}
 
 }

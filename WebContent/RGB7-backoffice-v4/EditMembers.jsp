@@ -80,9 +80,7 @@ body {
 								<ul class="breadcrumb">
 										<li><a href="start.jsp">${ktm:getText('page.home') }</a>
 												<span class="divider">/</span></li>
-										<li><a
-												href="CRUDMembers?method=list&module=member&pageNumber=0"
-										>${ktm:getText('page.members.title') }</a> <span class="divider">/</span></li>
+										<li>${ktm:getText('page.members.title') } <span class="divider">/</span></li>
 										<li class="active">${ktm:getText('page.member.edit') }</li>
 								</ul>
 								<!--  ===========form====================-->

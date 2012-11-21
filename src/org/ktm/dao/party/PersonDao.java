@@ -6,6 +6,6 @@ import org.ktm.domain.party.Person;
 
 public interface PersonDao extends Dao {
 
-    public List<Person> findAll();
+	public List<Person> findAll();
 
 }

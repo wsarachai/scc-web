@@ -132,7 +132,7 @@ public class GeneralGetFileServlet extends HttpServlet {
 				mimetype = mtMap.getContentType( file );
 			}
 		}
-		System.out.println( "mimetype: " + mimetype );
+		//System.out.println( "mimetype: " + mimetype );
 		return mimetype;
 	}
 
@@ -142,7 +142,7 @@ public class GeneralGetFileServlet extends HttpServlet {
 		if ( pos > 0 && pos < filename.length() - 1 ) {
 			suffix = filename.substring( pos + 1 );
 		}
-		System.out.println( "suffix: " + suffix );
+		//System.out.println( "suffix: " + suffix );
 		return suffix;
 	}
 }

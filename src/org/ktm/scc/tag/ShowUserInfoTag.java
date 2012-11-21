@@ -1,12 +1,13 @@
 package org.ktm.scc.tag;
 
 import java.io.IOException;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import org.ktm.authen.Authenticator;
-import org.ktm.dao.KTMEMDaoFactory;
-import org.ktm.dao.party.AuthenDao;
-import org.ktm.domain.party.Authen;
+import org.ktm.authen.AuthenticatorFactory;
+import org.ktm.exception.AuthException;
 
 public class ShowUserInfoTag extends SimpleTagSupport {
 
@@ -14,21 +15,31 @@ public class ShowUserInfoTag extends SimpleTagSupport {
 
 	@Override
 	public void doTag() throws IOException {
-		Object obj = getJspContext().findAttribute( Authenticator.PROP_USERNAME );
-		if ( obj != null && obj instanceof String ) {
+		PageContext pageContext = (PageContext) getJspContext();
+		HttpSession session = (HttpSession) pageContext.getSession();
+
+		try {
+			Authenticator auth = AuthenticatorFactory.getAuthComponentNoCreate( session );
+			String username = (String) auth.getProperty( Authenticator.PROP_USERNAME );
+			Integer user_id = (Integer) auth.getProperty( "userid" );
+			String user_division_name = (String) auth.getProperty( "user_division_name" );
+
 			JspWriter out = getJspContext().getOut();
-			String username = (String) obj;
-			AuthenDao authenDao = KTMEMDaoFactory.getInstance().getAuthenDao();
-			Authen auth = authenDao.findByUsername( username );
-			if ( auth != null ) {
-				if ( info.equals( "username" ) ) {
-					out.print( username );
-				} else if ( info.equals( "id" ) ) {
-					if ( auth.getParty() != null ) {
-						out.print( auth.getParty().getUniqueId() );
-					}
-				}
+
+			if ( username != null && info.equals( "username" ) ) {
+				out.print( username );
 			}
+
+			if ( user_id != null && info.equals( "id" ) ) {
+				out.print( user_id );
+			}
+
+			if ( user_division_name != null && info.equals( "division_name" ) ) {
+				out.print( user_division_name );
+			}
+		}
+		catch ( AuthException e ) {
+			e.printStackTrace();
 		}
 	}
 

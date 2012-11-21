@@ -16,69 +16,69 @@ import org.ktm.domain.KTMEntity;
 @Entity
 public class PartySignature implements KTMEntity {
 
-    private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-    private Integer           uniqueId;
-    private Integer           version;
-    private Date              when;
-    private String            reason;
-    private PartyIdentifier   partyIdentifier;
-    private Authen            authen;
+	private Integer				uniqueId;
+	private Integer				version;
+	private Date				when;
+	private String				reason;
+	private PartyIdentifier		partyIdentifier;
+	private Authen				authen;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "uniqueId", nullable = false)
-    public Integer getUniqueId() {
-        return uniqueId;
-    }
+	@Id
+	@GeneratedValue
+	@Column( name = "uniqueId", nullable = false )
+	public Integer getUniqueId() {
+		return uniqueId;
+	}
 
-    public void setUniqueId(Integer uniqueId) {
-        this.uniqueId = uniqueId;
-    }
+	public void setUniqueId( Integer uniqueId ) {
+		this.uniqueId = uniqueId;
+	}
 
-    @Version
-    @Column(name = "version")
-    public Integer getVersion() {
-        return version;
-    }
+	@Version
+	@Column( name = "version" )
+	public Integer getVersion() {
+		return version;
+	}
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+	public void setVersion( Integer version ) {
+		this.version = version;
+	}
 
-    @Column(name = "signedDate")
-    public Date getWhen() {
-        return when;
-    }
+	@Column( name = "signedDate" )
+	public Date getWhen() {
+		return when;
+	}
 
-    public void setWhen(Date when) {
-        this.when = when;
-    }
+	public void setWhen( Date when ) {
+		this.when = when;
+	}
 
-    @Column(name = "reason")
-    public String getReason() {
-        return reason;
-    }
+	@Column( name = "reason" )
+	public String getReason() {
+		return reason;
+	}
 
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
+	public void setReason( String reason ) {
+		this.reason = reason;
+	}
 
-    @Column(name = "partyIdentifier")
-    public PartyIdentifier getPartyIdentifier() {
-        return partyIdentifier;
-    }
+	@Column( name = "partyIdentifier" )
+	public PartyIdentifier getPartyIdentifier() {
+		return partyIdentifier;
+	}
 
-    public void setPartyIdentifier(PartyIdentifier partyIdentifier) {
-        this.partyIdentifier = partyIdentifier;
-    }
+	public void setPartyIdentifier( PartyIdentifier partyIdentifier ) {
+		this.partyIdentifier = partyIdentifier;
+	}
 
-    @OneToOne
-    public Authen getAuthen() {
-        return authen;
-    }
+	@OneToOne
+	public Authen getAuthen() {
+		return authen;
+	}
 
-    public void setAuthen(Authen authen) {
-        this.authen = authen;
-    }
+	public void setAuthen( Authen authen ) {
+		this.authen = authen;
+	}
 }

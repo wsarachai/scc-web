@@ -15,7 +15,7 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="CRUDMembers?method=edit&module=member&uniqueId=7"><i class="icon-cog"></i>&nbsp;${ktm:getText('page.profile')}</a></li>
+              <li><a href="CRUDMembers?method=edit&module=member&uniqueId=<ktm:ShowUserInfo info="id"/>"><i class="icon-cog"></i>&nbsp;${ktm:getText('page.profile')}</a></li>
               <li class="divider"></li>
               <li><a href="logout"><i class="icon-off"></i>&nbsp;${ktm:getText('page.logout')}</a></li>
             </ul>

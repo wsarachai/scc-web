@@ -6,9 +6,9 @@ import org.ktm.domain.party.Supplier;
 
 public interface SupplierDao extends Dao {
 
-    @Override
-    public Collection<Supplier> findAll();
+	@Override
+	public Collection<Supplier> findAll();
 
-    public Supplier findByPartyIdentifier(String partyIdentifier);
+	public Supplier findByPartyIdentifier( String partyIdentifier );
 
 }

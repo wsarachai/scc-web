@@ -20,86 +20,84 @@ import org.ktm.domain.KTMEntity;
  * set of PartyRole instance
  */
 @Entity
-@Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = {
-    "uniqueId", "name"
-    })
-})
+@Table( uniqueConstraints = { @UniqueConstraint( columnNames = { "uniqueId",
+																"name" } ) } )
 public class PartyRoleType implements KTMEntity {
 
-    private static final long        serialVersionUID  = 1L;
+	private static final long			serialVersionUID	= 1L;
 
-    private Integer                  uniqueId;
-    private Integer                  version;
-    private String                   name;
-    private String                   description;
-    private RoleSet                  requirementsForRole;
-    private Set<PartyRoleConstraint> validTypesOfParty = new HashSet<PartyRoleConstraint>(0);
+	private Integer						uniqueId;
+	private Integer						version;
+	private String						name;
+	private String						description;
+	private RoleSet						requirementsForRole;
+	private Set<PartyRoleConstraint>	validTypesOfParty	= new HashSet<PartyRoleConstraint>( 0 );
 
-    @Id
-    @GeneratedValue
-    @Column(name = "uniqueId", nullable = false)
-    public Integer getUniqueId() {
-        return uniqueId;
-    }
+	@Id
+	@GeneratedValue
+	@Column( name = "uniqueId", nullable = false )
+	public Integer getUniqueId() {
+		return uniqueId;
+	}
 
-    public void setUniqueId(Integer uniqueId) {
-        this.uniqueId = uniqueId;
-    }
+	public void setUniqueId( Integer uniqueId ) {
+		this.uniqueId = uniqueId;
+	}
 
-    @Version
-    @Column(name = "version")
-    public Integer getVersion() {
-        return version;
-    }
+	@Version
+	@Column( name = "version" )
+	public Integer getVersion() {
+		return version;
+	}
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+	public void setVersion( Integer version ) {
+		this.version = version;
+	}
 
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
+	@Column( name = "name" )
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName( String name ) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription( String description ) {
+		this.description = description;
+	}
 
-    @OneToOne(cascade = CascadeType.ALL)
-    public RoleSet getRequirementsForRole() {
-        return requirementsForRole;
-    }
+	@OneToOne( cascade = CascadeType.ALL )
+	public RoleSet getRequirementsForRole() {
+		return requirementsForRole;
+	}
 
-    public void setRequirementsForRole(RoleSet requirementsForRole) {
-        this.requirementsForRole = requirementsForRole;
-    }
+	public void setRequirementsForRole( RoleSet requirementsForRole ) {
+		this.requirementsForRole = requirementsForRole;
+	}
 
-    @OneToMany
-    public Set<PartyRoleConstraint> getValidTypesOfParty() {
-        return validTypesOfParty;
-    }
+	@OneToMany
+	public Set<PartyRoleConstraint> getValidTypesOfParty() {
+		return validTypesOfParty;
+	}
 
-    public void setValidTypesOfParty(Set<PartyRoleConstraint> validTypesOfParty) {
-        this.validTypesOfParty = validTypesOfParty;
-    }
+	public	void
+			setValidTypesOfParty( Set<PartyRoleConstraint> validTypesOfParty ) {
+		this.validTypesOfParty = validTypesOfParty;
+	}
 
-    @Transient
-    public boolean canPlayRole(Party party) {
-        return true;
-    }
+	@Transient
+	public boolean canPlayRole( Party party ) {
+		return true;
+	}
 
-    @Transient
-    public PartyRoleConstraint[] getContraints() {
-        return null;
-    }
+	@Transient
+	public PartyRoleConstraint [] getContraints() {
+		return null;
+	}
 
 }

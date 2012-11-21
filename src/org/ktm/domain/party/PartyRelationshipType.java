@@ -19,60 +19,62 @@ import javax.persistence.Version;
 @Entity
 public class PartyRelationshipType implements Serializable {
 
-    private static final long                serialVersionUID  = 1L;
+	private static final long					serialVersionUID	= 1L;
 
-    private Integer                          uniqueId;
-    private Integer                          version;
-    private String                           name;
-    private RoleSet                          requirementsForRelationship;
-    private Set<PartyRelationshipConstraint> validTypesOfParty = new HashSet<PartyRelationshipConstraint>(0);
+	private Integer								uniqueId;
+	private Integer								version;
+	private String								name;
+	private RoleSet								requirementsForRelationship;
+	private Set<PartyRelationshipConstraint>	validTypesOfParty	= new HashSet<PartyRelationshipConstraint>( 0 );
 
-    @Id
-    @GeneratedValue
-    @Column(name = "uniqueId", nullable = false)
-    public Integer getUniqueId() {
-        return uniqueId;
-    }
+	@Id
+	@GeneratedValue
+	@Column( name = "uniqueId", nullable = false )
+	public Integer getUniqueId() {
+		return uniqueId;
+	}
 
-    public void setUniqueId(Integer uniqueId) {
-        this.uniqueId = uniqueId;
-    }
+	public void setUniqueId( Integer uniqueId ) {
+		this.uniqueId = uniqueId;
+	}
 
-    @Version
-    @Column(name = "version")
-    public Integer getVersion() {
-        return version;
-    }
+	@Version
+	@Column( name = "version" )
+	public Integer getVersion() {
+		return version;
+	}
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+	public void setVersion( Integer version ) {
+		this.version = version;
+	}
 
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
+	@Column( name = "name" )
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName( String name ) {
+		this.name = name;
+	}
 
-    @OneToOne(cascade = CascadeType.ALL)
-    public RoleSet getRequirementsForRelationship() {
-        return requirementsForRelationship;
-    }
+	@OneToOne( cascade = CascadeType.ALL )
+	public RoleSet getRequirementsForRelationship() {
+		return requirementsForRelationship;
+	}
 
-    public void setRequirementsForRelationship(RoleSet requirementsForRelationship) {
-        this.requirementsForRelationship = requirementsForRelationship;
-    }
+	public	void
+			setRequirementsForRelationship( RoleSet requirementsForRelationship ) {
+		this.requirementsForRelationship = requirementsForRelationship;
+	}
 
-    @OneToMany(mappedBy = "partyRelationshipType")
-    public Set<PartyRelationshipConstraint> getValidTypesOfParty() {
-        return validTypesOfParty;
-    }
+	@OneToMany( mappedBy = "partyRelationshipType" )
+	public Set<PartyRelationshipConstraint> getValidTypesOfParty() {
+		return validTypesOfParty;
+	}
 
-    public void setValidTypesOfParty(Set<PartyRelationshipConstraint> validTypesOfParty) {
-        this.validTypesOfParty = validTypesOfParty;
-    }
+	public	void
+			setValidTypesOfParty( Set<PartyRelationshipConstraint> validTypesOfParty ) {
+		this.validTypesOfParty = validTypesOfParty;
+	}
 
 }

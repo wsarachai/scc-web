@@ -3,7 +3,7 @@
 %>
 <%@ taglib uri="/WEB-INF/tags/ktm-libs.tld" prefix="ktm"%>
 <ktm:enforceAuthentication loginPage="/RGB7-backoffice-v4/login.jsp" />
-<ktm:isUserNotInRoles roles="Root,Admin,Employee">
+<ktm:isUserNotInRoles roles="Root,Admin">
 		<ktm:redirectPage page="/index.jsp" />
 </ktm:isUserNotInRoles>
 <!DOCTYPE html>

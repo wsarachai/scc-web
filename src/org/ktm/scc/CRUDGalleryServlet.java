@@ -43,7 +43,7 @@ public class CRUDGalleryServlet extends CRUDAbstractImgUpload {
 															KTMException {
 		logger.debug( ">>> listGallery: begin" );
 
-		listData( form );
+		listData( request.getSession(), form );
 
 		logger.debug( ">>> listGallery: end" );
 
@@ -62,7 +62,9 @@ public class CRUDGalleryServlet extends CRUDAbstractImgUpload {
 
 		GalleryDao galleryDao = KTMEMDaoFactory.getInstance().getGalleryDao();
 		Gallery gallery = (Gallery) galleryDao.get( Integer.parseInt( bean.getUniqueId() ) );
+
 		if ( gallery != null ) {
+
 			bean.loadToForm( gallery );
 
 			session.setAttribute( GalleryBean.UNIQUD_ID, bean.getIdentifier() );

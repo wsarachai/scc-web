@@ -8,10 +8,10 @@ import org.ktm.domain.party.PartyRole;
 
 public interface PartyRoleDao extends Dao {
 
-    public PartyRole findByRoleName(Party party, String roleName);
+	public PartyRole findByRoleName( Party party, String roleName );
 
-    public Set<PartyRole> findByParty(Party party);
+	public Set<PartyRole> findByParty( Party party );
 
-    public Vector<String> findByPartyString(Party party);
+	public Vector<String> findByPartyString( Party party );
 
 }

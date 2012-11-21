@@ -49,7 +49,7 @@ public class CRUDArticleServlet extends CRUDAbstractImgUpload {
 
 		logger.debug( ">>> listGallery: begin" );
 
-		listData( form );
+		listData( request.getSession(), form );
 
 		logger.debug( ">>> listGallery: begin" );
 

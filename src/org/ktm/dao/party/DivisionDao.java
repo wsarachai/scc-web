@@ -5,6 +5,6 @@ import org.ktm.domain.party.Division;
 
 public interface DivisionDao extends PartyRoleDao {
 
-    public List<Division> findAll();
+	public List<Division> findAll();
 
 }

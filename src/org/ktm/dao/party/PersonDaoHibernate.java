@@ -9,28 +9,28 @@ import org.ktm.exception.DeleteException;
 
 public class PersonDaoHibernate extends PartyDaoHibernate implements PersonDao {
 
-    private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-    @Override
-    public Class<?> getFeaturedClass() {
-        return Person.class;
-    }
+	@Override
+	public Class<?> getFeaturedClass() {
+		return Person.class;
+	}
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Person> findAll() {
-        return (List<Person>) super.findAll();
-    }
+	@Override
+	@SuppressWarnings( "unchecked" )
+	public List<Person> findAll() {
+		return (List<Person>) super.findAll();
+	}
 
-    @Override
-    public int delete(Serializable id) throws DeleteException {
-        if (getFeaturedClass() != null && id != null) {
-            AuthenDao authDao = KTMEMDaoFactory.getInstance().getAuthenDao();
-            Authen auth = authDao.findByPartyId((Integer) id);
-            authDao.delete(auth);
+	@Override
+	public int delete( Serializable id ) throws DeleteException {
+		if ( getFeaturedClass() != null && id != null ) {
+			AuthenDao authDao = KTMEMDaoFactory.getInstance().getAuthenDao();
+			Authen auth = authDao.findByPartyId( (Integer) id );
+			authDao.delete( auth );
 
-            return super.delete(id);
-        }
-        return -1;
-    }
+			return super.delete( id );
+		}
+		return -1;
+	}
 }

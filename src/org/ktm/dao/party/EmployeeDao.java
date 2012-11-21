@@ -5,5 +5,5 @@ import org.ktm.domain.party.Employee;
 
 public interface EmployeeDao extends PartyRoleDao {
 
-    public List<Employee> findAll();
+	public List<Employee> findAll();
 }

@@ -4,8 +4,8 @@ import org.ktm.domain.party.Employment;
 
 public interface EmploymentDao extends PartyRelationshipDao {
 
-    Employment findBySupply(Integer divisionId);
+	Employment findBySupply( Integer divisionId );
 
-    Employment findByClient(Integer divisionId);
+	Employment findByClient( Integer divisionId );
 
 }

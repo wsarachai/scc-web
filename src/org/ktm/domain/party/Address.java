@@ -13,34 +13,34 @@ import org.ktm.domain.KTMEntity;
 @Entity
 public class Address implements KTMEntity {
 
-    private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-    private Integer           uniqueId;
-    private Integer           version;
+	private Integer				uniqueId;
+	private Integer				version;
 
-    @Id
-    @Override
-    @GeneratedValue
-    @Column(name = "uniqueId", nullable = false)
-    public Integer getUniqueId() {
-        return uniqueId;
-    }
+	@Id
+	@Override
+	@GeneratedValue
+	@Column( name = "uniqueId", nullable = false )
+	public Integer getUniqueId() {
+		return uniqueId;
+	}
 
-    @Override
-    public void setUniqueId(Integer uniqueId) {
-        this.uniqueId = uniqueId;
-    }
+	@Override
+	public void setUniqueId( Integer uniqueId ) {
+		this.uniqueId = uniqueId;
+	}
 
-    @Version
-    @Override
-    @Column(name = "version")
-    public Integer getVersion() {
-        return version;
-    }
+	@Version
+	@Override
+	@Column( name = "version" )
+	public Integer getVersion() {
+		return version;
+	}
 
-    @Override
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+	@Override
+	public void setVersion( Integer version ) {
+		this.version = version;
+	}
 
 }

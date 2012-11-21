@@ -17,64 +17,66 @@ import javax.persistence.Version;
 @Entity
 public class PartyRelationshipConstraint implements Serializable {
 
-    private static final long     serialVersionUID = 1L;
+	private static final long		serialVersionUID	= 1L;
 
-    private Integer               uniqueId;
-    private Integer               version;
-    private String                clientRoleName;
-    private String                supplierRoleName;
-    private PartyRelationshipType partyRelationshipType;
+	private Integer					uniqueId;
+	private Integer					version;
+	private String					clientRoleName;
+	private String					supplierRoleName;
+	private PartyRelationshipType	partyRelationshipType;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "uniqueId", nullable = false)
-    public Integer getUniqueId() {
-        return uniqueId;
-    }
+	@Id
+	@GeneratedValue
+	@Column( name = "uniqueId", nullable = false )
+	public Integer getUniqueId() {
+		return uniqueId;
+	}
 
-    public void setUniqueId(Integer uniqueId) {
-        this.uniqueId = uniqueId;
-    }
+	public void setUniqueId( Integer uniqueId ) {
+		this.uniqueId = uniqueId;
+	}
 
-    @Version
-    @Column(name = "version")
-    public Integer getVersion() {
-        return version;
-    }
+	@Version
+	@Column( name = "version" )
+	public Integer getVersion() {
+		return version;
+	}
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+	public void setVersion( Integer version ) {
+		this.version = version;
+	}
 
-    @Column(name = "clientRole")
-    public String getClientRoleName() {
-        return clientRoleName;
-    }
+	@Column( name = "clientRole" )
+	public String getClientRoleName() {
+		return clientRoleName;
+	}
 
-    public void setClientRoleName(String clientRoleName) {
-        this.clientRoleName = clientRoleName;
-    }
+	public void setClientRoleName( String clientRoleName ) {
+		this.clientRoleName = clientRoleName;
+	}
 
-    @Column(name = "supplierRole")
-    public String getSupplierRoleName() {
-        return supplierRoleName;
-    }
+	@Column( name = "supplierRole" )
+	public String getSupplierRoleName() {
+		return supplierRoleName;
+	}
 
-    public void setSupplierRoleName(String supplierRoleName) {
-        this.supplierRoleName = supplierRoleName;
-    }
+	public void setSupplierRoleName( String supplierRoleName ) {
+		this.supplierRoleName = supplierRoleName;
+	}
 
-    @ManyToOne
-    public PartyRelationshipType getPartyRelationshipType() {
-        return partyRelationshipType;
-    }
+	@ManyToOne
+	public PartyRelationshipType getPartyRelationshipType() {
+		return partyRelationshipType;
+	}
 
-    public void setPartyRelationshipType(PartyRelationshipType partyRelationshipType) {
-        this.partyRelationshipType = partyRelationshipType;
-    }
+	public	void
+			setPartyRelationshipType( PartyRelationshipType partyRelationshipType ) {
+		this.partyRelationshipType = partyRelationshipType;
+	}
 
-    @Transient
-    public boolean canFromRelationship(PartyRole partyRoleA, PartyRole partyRoleB) {
-        return true;
-    }
+	@Transient
+	public boolean canFromRelationship( PartyRole partyRoleA,
+										PartyRole partyRoleB ) {
+		return true;
+	}
 }

@@ -66,7 +66,7 @@ body {
 						<!--/span-->
 						<!--  ===========Content====================-->
 						<div class="span9  ">
-								<h1>${ktm:getText('page.gallery.list') }</h1>
+								<h1>${ktm:getText('page.gallery.list') } <ktm:ShowUserInfo info="division_name"/></h1>
 								<br />
 								<!--  ===========breadcrumb====================-->
 								<ul class="breadcrumb">
