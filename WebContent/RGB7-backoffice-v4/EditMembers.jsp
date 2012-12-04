@@ -142,6 +142,7 @@ body {
 														>
 												</div>
 										</div>
+										<ktm:isUserInRoles roles="Root,Admin">
 										<br />
 										<p>
 												<span class="badge badge-inverse">2.</span> <strong>${ktm:getText('page.members.group')}</strong>
@@ -153,6 +154,7 @@ body {
 														value="uniqueId" collection="divisionCollection"
 												/>
 										</select>
+										</ktm:isUserInRoles>
 										<div class="span9">
 											<hr/>
 											<div class="button-group pull-right">

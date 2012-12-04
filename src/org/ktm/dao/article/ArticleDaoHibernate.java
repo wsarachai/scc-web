@@ -29,7 +29,7 @@ public class ArticleDaoHibernate extends AbstractHibernateStorageDao implements
 	@Override
 	public Collection<?> find( int pageNumber ) {
 		List<Article> result = new ArrayList<Article>();
-		String queryString = "select article FROM Article AS article ORDER BY article.dateCreated, article.uniqueId DESC";
+		String queryString = "select article FROM Article AS article ORDER BY article.dateCreated DESC, article.uniqueId DESC";
 
 		try {
 			Query query = getCurrentSession().createQuery( queryString );
@@ -106,7 +106,7 @@ public class ArticleDaoHibernate extends AbstractHibernateStorageDao implements
 	@Override
 	public Collection<?> findByDivision( Integer division_id, int pageNumber ) {
 		List<Article> result = new ArrayList<Article>();
-		String queryString = "select article FROM Article AS article WHERE article.author.uniqueId = :division_id ORDER BY article.dateCreated, article.uniqueId DESC";
+		String queryString = "select article FROM Article AS article WHERE article.author.uniqueId = :division_id ORDER BY article.dateCreated DESC, article.uniqueId DESC";
 
 		try {
 			Query query = getCurrentSession().createQuery( queryString );

@@ -23,7 +23,7 @@ public class GalleryDaoHibernate extends AbstractHibernateStorageDao implements
 	@Override
 	public Collection<?> find( int pageNumber ) {
 		List<Gallery> result = new ArrayList<Gallery>();
-		String queryString = "select gallery FROM Gallery AS gallery ORDER BY gallery.dateCreated, gallery.uniqueId DESC";
+		String queryString = "select gallery FROM Gallery AS gallery ORDER BY gallery.dateCreated DESC, gallery.uniqueId DESC";
 
 		try {
 			Query query = getCurrentSession().createQuery( queryString );
@@ -101,7 +101,7 @@ public class GalleryDaoHibernate extends AbstractHibernateStorageDao implements
 	@Override
 	public Collection<?> findByDivision( Integer division_id, int pageNumber ) {
 		List<Gallery> result = new ArrayList<Gallery>();
-		String queryString = "select gallery FROM Gallery AS gallery WHERE gallery.author.uniqueId = :division_id ORDER BY gallery.dateCreated, gallery.uniqueId DESC";
+		String queryString = "select gallery FROM Gallery AS gallery WHERE gallery.author.uniqueId = :division_id ORDER BY gallery.dateCreated DESC, gallery.uniqueId DESC";
 
 		try {
 			Query query = getCurrentSession().createQuery( queryString );

@@ -88,8 +88,8 @@ body {
 										<thead>
 												<tr>
 														<th width="5%">#</th>
-														<th width="35%">${ktm:getText('page.article.title') }</th>
-														<th width="15%">${ktm:getText('page.date') }</th>
+														<th width="30%">${ktm:getText('page.article.title') }</th>
+														<th width="20%">${ktm:getText('page.date') }</th>
 														<th width="20%">${ktm:getText('page.members.division') }</th>
 														<th width="5%"></th>
 														<th width="20%">Action</th>

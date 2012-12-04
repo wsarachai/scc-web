@@ -78,18 +78,20 @@ public abstract class CRUDAbstractImgUpload extends CRUDSCCServlet {
 			if ( auth.isInRoles( roles ) ) {
 
 				list = dao.find( bean.getPageNumber() + 1 );
+				bean.setMaxRows( (int) dao.getCount() );
 
 			} else {
 
 				if ( division_id != null ) {
 					list = dao.findByDivision( division_id,
 							bean.getPageNumber() + 1 );
+
+					bean.setMaxRows( (int) dao.getCountByDivision( division_id ) );
 				}
 
 			}
 
 			bean.setMaxPage( KTMContext.paging );
-			bean.setMaxRows( (int) dao.getCountByDivision( division_id ) );
 
 			bean.loadFormCollection( list );
 		}
@@ -263,25 +265,28 @@ public abstract class CRUDAbstractImgUpload extends CRUDSCCServlet {
 									imageUpload = servlet.getNewEntity();
 								}
 
-								// Assign Division only on create
-								Object userObj = session.getAttribute( Authenticator.PROP_USERNAME );
-								if ( userObj != null && userObj instanceof String ) {
-									String username = (String) userObj;
-									Authen authen = authenDao.findByUsername( username );
-									if ( authen != null ) {
-										Set<PartyRole> roles = (Set<PartyRole>) authen.getParty()
-												.getRoles();
-										if ( roles != null && roles.size() > 0 ) {
-											for ( PartyRole role : roles ) {
-												if ( role instanceof Employee ) {
-													Employment emp = empDao.findByClient( role.getUniqueId() );
-													PartyRole supply = emp.getSupply();
-													if ( supply != null && supply instanceof Division ) {
-														imageUpload.setAuthor( (Division) supply );
+								// if Root, Admin not assign Division
+								if ( !auth.isInRoles( roles ) ) {
+									// Assign Division only on create
+									Object userObj = session.getAttribute( Authenticator.PROP_USERNAME );
+									if ( userObj != null && userObj instanceof String ) {
+										String username = (String) userObj;
+										Authen authen = authenDao.findByUsername( username );
+										if ( authen != null ) {
+											Set<PartyRole> roles = (Set<PartyRole>) authen.getParty()
+													.getRoles();
+											if ( roles != null && roles.size() > 0 ) {
+												for ( PartyRole role : roles ) {
+													if ( role instanceof Employee ) {
+														Employment emp = empDao.findByClient( role.getUniqueId() );
+														PartyRole supply = emp.getSupply();
+														if ( supply != null && supply instanceof Division ) {
+															imageUpload.setAuthor( (Division) supply );
 
-														Organization org = (Organization) supply.getParty();
-														logger.debug( "CRUDGalleryServlet set division: " + org.getThaiName() );
+															Organization org = (Organization) supply.getParty();
+															logger.debug( "CRUDGalleryServlet set division: " + org.getThaiName() );
 
+														}
 													}
 												}
 											}
